@@ -13,12 +13,11 @@ const BookEventPopup: React.FC<BookEventPopupProps> = ({ event, onClose }) => {
   const navigate = useNavigate();
 
   const handleBooking = () => {
+
+    // Navigate to the payment page
     navigate('/payment');
     // Close the popup
     onClose();
-
-    // Navigate to the payment page
-    
   };
 
   // const handleBooking = () => {
