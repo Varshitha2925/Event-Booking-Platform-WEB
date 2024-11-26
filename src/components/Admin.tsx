@@ -20,7 +20,7 @@ const AdminPage: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/admin/users');
+      const response = await axios.get('http://localhost:3001/api/admin/users');
       setUsers(response.data);
       console.log("users",response.data )
     } catch (error) {
