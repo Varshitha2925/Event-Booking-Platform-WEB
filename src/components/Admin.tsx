@@ -4,7 +4,7 @@ import './Admin.css'; // Add CSS styles for the admin page
 
 // Admin Page Component
 const AdminPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>('users');
+  const [activeTab, setActiveTab] = useState<string>('events');
   const [users, setUsers] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
@@ -30,7 +30,7 @@ const AdminPage: React.FC = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('/api/admin/events');
+      const response = await axios.get('http://localhost:3001/api/admin/events');
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
