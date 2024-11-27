@@ -4,7 +4,7 @@ import './Admin.css'; // Add CSS styles for the admin page
 
 // Admin Page Component
 const AdminPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>('events');
+  const [activeTab, setActiveTab] = useState<string>('users');
   const [users, setUsers] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
@@ -21,8 +21,8 @@ const AdminPage: React.FC = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/users');
-      setUsers(response.data);
-      console.log("users",response.data )
+      setUsers(response.data.data);
+      console.log("users",response.data.data )
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -40,7 +40,7 @@ const AdminPage: React.FC = () => {
   const fetchBookings = async () => {
     try {
       const response = await axios.get('/api/admin/bookings');
-      setBookings(response.data);
+      setBookings(response.data.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     }
@@ -104,8 +104,8 @@ const AdminPage: React.FC = () => {
                 {users.map((user) => (
                   <tr key={user._id}>
                     <td>{user._id}</td>
-                    <td>{user.first_name}</td>
-                    <td>{user.last_name}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td>{user.phone}</td>
                     <td>{user.role}</td>
