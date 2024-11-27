@@ -18,13 +18,18 @@ const Register: React.FC = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:3001/api/users/register', {
-        firstName,
+      console.log("data to API",{firstName,
         lastName,
         email,
         phone,
-        password,
-        role,
+        password})
+
+      const response = await axios.post('http://localhost:3001/api/users/register', {
+        "firstName":firstName,
+        "lastName":lastName,
+        "email":email,
+        "phone":phone,
+        "password":password
       });
 
       if (response.data.success) {

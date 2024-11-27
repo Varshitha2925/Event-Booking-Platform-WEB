@@ -19,7 +19,9 @@ const Login: React.FC = () => {
         password,
       });
 
-      if (response.data.success) {
+      console.log("response",response)
+
+      if (response.statusText === "OK") {
         console.log('Login successful');
         localStorage.setItem('token', response.data.token); // Save token to local storage
         navigate('/dashboard'); // Redirect to user/organizer dashboard
