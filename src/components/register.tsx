@@ -16,32 +16,69 @@ const Register: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    try {
-      console.log("data to API",{firstName,
-        lastName,
-        email,
-        phone,
-        password})
-
-      const response = await axios.post('http://localhost:3001/api/users/register', {
-        "firstName":firstName,
-        "lastName":lastName,
-        "email":email,
-        "phone":phone,
-        "password":password
-      });
-
-      if (response.data.success) {
-        console.log('Registration successful');
-        navigate('/login'); // Redirect to login page
-      } else {
-        setError(response.data.message || 'Registration failed');
+    if(role === "user"){
+      try {
+        console.log("data to API",{firstName,
+          lastName,
+          email,
+          phone,
+          password})
+  
+        const response = await axios.post(`http://localhost:3001/api/users/register`, {
+          "firstName":firstName,
+          "lastName":lastName,
+          "email":email,
+          "phone":phone,
+          "password":password
+        });
+      
+       
+  
+        if (response.data.success) {
+          console.log('Registration successful');
+          navigate('/login'); // Redirect to login page
+        } else {
+          setError(response.data.message || 'Registration failed');
+        }
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'An error occurred. Please try again.');
+        console.error('Registration error:', err);
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'An error occurred. Please try again.');
-      console.error('Registration error:', err);
+
     }
+    else{
+      try {
+        console.log("data to API",{firstName,
+          lastName,
+          email,
+          phone,
+          password})
+  
+        const response = await axios.post(`http://localhost:3001/api/auth/register`, {
+          "firstName":firstName,
+          "lastName":lastName,
+          "email":email,
+          "phone":phone,
+          "password":password
+        });
+      
+       
+  
+        if (response.data.success) {
+          console.log('Registration successful');
+          navigate('/login'); // Redirect to login page
+        } else {
+          setError(response.data.message || 'Registration failed');
+        }
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'An error occurred. Please try again.');
+        console.error('Registration error:', err);
+      }
+
+    }
+
+    
+   
   };
 
   return (
