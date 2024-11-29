@@ -4,6 +4,7 @@ import UserEventDashboard from './components/UserEventDashboard';
 
 // import AdminPage from './components/Admin';
 import LoginPage from './components/login';
+import PaymentPage from './components/PaymentPage';
 import RegisterPage from './components/register';
 
 const App: React.FC = () => {
@@ -11,8 +12,8 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         *<Route path="/dashboard" element={<UserEventDashboard />} />
-        {/* <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/" element={<EventDashboard />} /> */}
+        <Route path="/payment" element={<PaymentPage />} />
+        {/* <Route path="/" element={<EventDashboard />} /> */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

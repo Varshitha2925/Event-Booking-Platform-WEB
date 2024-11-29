@@ -1,29 +1,51 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './BookEventPopup.css';
 
 interface BookEventPopupProps {
-  event: { _id: string; title: string };
+  event: {
+    _id: string;
+    title: string;
+    image: string;
+    seatsAvailable: number;
+    ticketPrice: number;
+    type: string;
+  },
   onClose: () => void;
 }
 
+
 const BookEventPopup: React.FC<BookEventPopupProps> = ({ event, onClose }) => {
   const [seats, setSeats] = useState(1);
-
+  // const [booking, setbooking] = useState()
   const navigate = useNavigate();
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
 
+    try {
+      const booking = {
+        eventId:event._id,
+        userId:localStorage.getItem("userId"),
+        no_of_tickets: seats,
+        totalPrize: (event.ticketPrice)*seats,
+        booking_status:""
+      }
+
+      console.log("events",booking)
+
+      const response = await axios.post('http://localhost:3001/api/users/booking',booking);
+      console.log("response", response)
+      
+      // ,tt
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
     // Navigate to the payment page
     navigate('/payment');
     // Close the popup
     onClose();
   };
-
-  // const handleBooking = () => {
-  //   alert(`Booked ${seats} seat(s) for ${event.title}`);
-  //   onClose();
-  // };
 
   return (
     <div className="popup-overlay">
