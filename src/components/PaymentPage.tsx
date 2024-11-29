@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './PaymentPage.css';
 
 const PaymentPage: React.FC = () => {
@@ -7,12 +9,30 @@ const PaymentPage: React.FC = () => {
   const [cvv, setCvv] = useState('');
   const [name, setName] = useState('');
   const [success, setSuccess] = useState(false);
-
-  const handlePayment = (e: React.FormEvent) => {
+  const { bookingId } = useParams<{ bookingId: string }>();
+  console.log("eventId", bookingId)
+  const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     // Mock payment processing
     if (cardNumber && expiryDate && cvv && name) {
+      const paymentData = {
+        bookingId,
+        cardNumber,
+        expiryDate,
+        cvv,
+        name,
+      };
+  
+      try {
+        const response = await axios.post('http://localhost:3001/api/users/payment', paymentData);
+        console.log('Payment Successful:', response.data);
+        
+        setSuccess(true);
+      } catch (error) {
+        console.error('Payment Failed:', error);
+        setSuccess(false);
+      }
       setSuccess(true);
     } else {
       alert('Please fill out all the fields.');

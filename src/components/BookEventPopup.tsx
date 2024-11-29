@@ -35,14 +35,17 @@ const BookEventPopup: React.FC<BookEventPopupProps> = ({ event, onClose }) => {
       console.log("events",booking)
 
       const response = await axios.post('http://localhost:3001/api/users/booking',booking);
-      console.log("response", response)
+      console.log("response", response.data.data)
+
+      navigate(`/payment/${response.data.data._id}`);
       
       // ,tt
     } catch (error) {
       console.error('Error fetching users:', error);
     }
     // Navigate to the payment page
-    navigate('/payment');
+    
+    // console.log("eventID", event._id)
     // Close the popup
     onClose();
   };
