@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 // import { events } from "./mockData";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserEventDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [userId, setUserId] = useState<string | null>(null);
   const [events, setevent] = useState<any[]>([]);
   useEffect(() => {
@@ -23,10 +25,14 @@ const UserEventDashboard: React.FC = () => {
     }
     
   };
+  const handleMyBookings = () => {
+    navigate('/my-bookings'); // Navigate to the desired route
+  };
 
   return (
     <div className="user-dashboard">
       <h1>Events</h1>
+      <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
       <div className="event-list">
         {events.map((event) => (
           <EventCard key={event._id} event={event} />
