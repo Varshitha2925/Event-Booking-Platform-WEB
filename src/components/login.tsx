@@ -46,9 +46,8 @@ const Login: React.FC = () => {
 
       if (response.statusText === "OK") {
         console.log('Login successful');
-        localStorage.setItem('userId', response.data.user._id); // Save token to local storage
-        console.log('userId', response.data.user._id)
-        navigate('/dashboard'); // Redirect to user/organizer dashboard
+        localStorage.setItem('organizerId', response.data.user._id); // Save token to local storage
+        navigate('/organizer-dashboard'); // Redirect to user/organizer dashboard
       } else {
         setError(response.data.message || 'Login failed');
       }

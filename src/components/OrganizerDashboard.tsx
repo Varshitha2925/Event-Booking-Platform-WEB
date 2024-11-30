@@ -1,59 +1,89 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import CreateEventPopup from './CreateEventForm';
 import OrganizerEventCard from './OrganiserEventCard';
 import './OrganizerDashboard.css';
 
+// interface Event {
+//   id: string;
+//   title: string;
+//   location: string;
+//   date: string;
+//   capacity: number;
+//   ticketsSold: number;
+//   type: string;
 interface Event {
-  id: string;
-  title: string;
-  location: string;
-  date: string;
-  capacity: number;
-  ticketsSold: number;
-  eventType: string;
+  organizerId: any,
+  title: string,
+  location: string,
+  capacity: number,
+  date: string,
+  duration: number, // in hours
+  type: string,
+  price: number,
+  ticketSold: number
 }
+  
 
 const OrganizerDashboard: React.FC = () => {
-  const [events, setEvents] = useState<Event[]>([
-    {
-      id: '1',
-      title: 'Tech Conference',
-      location: 'San Francisco',
-      date: '2024-12-10',
-      capacity: 100,
-      ticketsSold: 50,
-      eventType: 'Paid',
-    },
-    {
-      id: '2',
-      title: 'Music Festival',
-      location: 'Los Angeles',
-      date: '2024-12-15',
-      capacity: 200,
-      ticketsSold: 180,
-      eventType: 'Free Limited',
-    },
-  ]);
+
+  const [events, setevent] = useState<any[]>([]);
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [eventToEdit, setEventToEdit] = useState<Event | null>(null);
+  const userId = localStorage.getItem("organizerId");
+  ;
+  
+  useEffect(() => {
+    
+    fetchEvents()
+  }, []);
 
-  const handleCreateEvent = (newEvent: Event) => {
+  const fetchEvents = async () => {
+    try {
+      console.log("userID", userId)
+      const response = await axios.get(`http://localhost:3001/api/events/getevents/${userId}`);
+      
+      setevent(response.data);
+      console.log("events",response.data)
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+    
+  };
+
+  const handleCreateEvent = async (newEvent: Event) => {
     if (eventToEdit) {
       // Editing an existing event
-      setEvents((prevEvents) =>
-        prevEvents.map((event) => (event.id === eventToEdit.id ? newEvent : event))
-      );
+      // setevent((prevEvents) =>
+      //   prevEvents.map((event) => (event._id === eventToEdit._id ? newEvent : event))
+      // );
+      
     } else {
       // Creating a new event
-      setEvents((prevEvents) => [...prevEvents, newEvent]);
+      console.log("newEvent" , newEvent)
+      // setevent((prevEvents) => [...prevEvents, newEvent]);
+      try {
+        newEvent.organizerId = userId
+        console.log("userID", userId)
+        console.log("newEvent", newEvent)
+        const response = await axios.post('http://localhost:3001/api/events',{
+          newEvent
+        });
+        console.log("DATA" , response.data)
+        
+        // setevent(response.data);
+        console.log("events",response.data)
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     }
     setEventToEdit(null);
     setIsPopupVisible(false);
   };
 
   const handleDeleteEvent = (eventId: string) => {
-    setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+    setevent((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
   };
 
   const handleEditEvent = (event: Event) => {
@@ -79,7 +109,7 @@ const OrganizerDashboard: React.FC = () => {
       <div className="event-list">
         {events.map((event) => (
           <OrganizerEventCard
-            key={event.id}
+            key={event.organizerId}
             event={event}
             onEdit={handleEditEvent}
             onDelete={handleDeleteEvent} bookings={[]}          />

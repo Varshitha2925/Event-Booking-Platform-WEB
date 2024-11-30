@@ -36,7 +36,7 @@ const Register: React.FC = () => {
   
         if (response.data.success) {
           console.log('Registration successful');
-          navigate('/login'); // Redirect to login page
+          navigate('/'); // Redirect to login page
         } else {
           setError(response.data.message || 'Registration failed');
         }
@@ -61,14 +61,12 @@ const Register: React.FC = () => {
           "phone":phone,
           "password":password
         });
-      
-       
-  
-        if (response.data.success) {
+        console.log("response", response)
+        if (response.data) {
           console.log('Registration successful');
-          navigate('/login'); // Redirect to login page
+          navigate('/'); // Redirect to login page
         } else {
-          setError(response.data.message || 'Registration failed');
+          setError(response.data || 'Registration failed');
         }
       } catch (err: any) {
         setError(err.response?.data?.message || 'An error occurred. Please try again.');
@@ -76,9 +74,6 @@ const Register: React.FC = () => {
       }
 
     }
-
-    
-   
   };
 
   return (

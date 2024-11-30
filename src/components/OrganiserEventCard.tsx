@@ -12,12 +12,15 @@ interface Booking {
 
 interface Event {
   id: string;
-  title: string;
-  location: string;
-  date: string;
-  capacity: number;
-  ticketsSold: number;
-  eventType: string;
+  organizerId: string,
+  title: string,
+  location: string,
+  capacity: number,
+  date: string,
+  duration: number, // in hours
+  type: string,
+  price: number,
+  ticketSold: number
 }
 
 interface OrganizerEventCardProps {
@@ -45,8 +48,8 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
       <p>Location: {event.location}</p>
       <p>Date: {event.date}</p>
       <p>Capacity: {event.capacity}</p>
-      <p>Tickets Sold: {event.ticketsSold}</p>
-      <p>Type: {event.eventType}</p>
+      <p>Tickets Sold: {event.ticketSold}</p>
+      <p>Type: {event.type}</p>
       <div className="card-buttons">
         <button onClick={() => onEdit(event)}>Edit</button>
         <button onClick={() => onDelete(event.id)}>Delete</button>

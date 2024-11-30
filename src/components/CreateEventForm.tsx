@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import './CreateEventForm.css';
 
-interface Event {
-  id: string;
-  title: string;
-  location: string;
-  date: string;
-  capacity: number;
-  ticketsSold: number;
-  eventType: string;
+// interface Event {
+//   id: string;
+//   title: string;
+//   location: string;
+//   date: string;
+//   capacity: number;
+//   ticketsSold: number;
+//   eventType: string;
+// }
+ interface Event {
+  organizerId: string,
+  title: string,
+  location: string,
+  capacity: number,
+  date: string,
+  duration: number, // in hours
+  type: string,
+  price: number,
+  ticketSold: number
 }
 
 interface CreateEventPopupProps {
@@ -26,7 +37,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
   const [capacity, setCapacity] = useState(0);
-  const [eventType, setEventType] = useState('Paid');
+  const [type, setEventType] = useState('Paid');
 
   useEffect(() => {
     if (eventToEdit) {
@@ -34,19 +45,21 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       setLocation(eventToEdit.location);
       setDate(eventToEdit.date);
       setCapacity(eventToEdit.capacity);
-      setEventType(eventToEdit.eventType);
+      setEventType(eventToEdit.type);
     }
   }, [eventToEdit]);
 
   const handleSubmit = () => {
     const newEvent: Event = {
-      id: eventToEdit ? eventToEdit.id : Math.random().toString(36).substr(2, 9),
       title,
       location,
       date,
       capacity,
-      ticketsSold: eventToEdit ? eventToEdit.ticketsSold : 0,
-      eventType,
+      ticketSold: eventToEdit ? eventToEdit.ticketSold : 0,
+      organizerId: '',
+      duration: 0,
+      price: 0,
+      type
     };
     onCreate(newEvent);
   };
@@ -90,7 +103,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
         <label>
           Event Type:
           <select
-            value={eventType}
+            value={type}
             onChange={(e) => setEventType(e.target.value)}
           >
             <option value="Paid">Paid</option>
