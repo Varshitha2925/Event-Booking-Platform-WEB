@@ -39,8 +39,9 @@ const AdminPage: React.FC = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get('/api/admin/bookings');
-      setBookings(response.data.data);
+      const response = await axios.get('http://localhost:3001/api/admin/bookings');
+      console.log("bookings", response.data)
+      setBookings(response.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     }
@@ -48,7 +49,8 @@ const AdminPage: React.FC = () => {
 
   const fetchPayments = async () => {
     try {
-      const response = await axios.get('/api/admin/payments');
+      const response = await axios.get('http://localhost:3001/api/admin/payment');
+      console.log("payments",response.data);
       setPayments(response.data);
     } catch (error) {
       console.error('Error fetching payments:', error);
@@ -154,17 +156,17 @@ const AdminPage: React.FC = () => {
                   <th>Event ID</th>
                   <th>User ID</th>
                   <th>No. of Seats</th>
-                  <th>Date</th>
+                  <th>Prize</th>
                 </tr>
               </thead>
               <tbody>
                 {bookings.map((booking) => (
                   <tr key={booking._id}>
                     <td>{booking._id}</td>
-                    <td>{booking.event_id}</td>
-                    <td>{booking.user_id}</td>
-                    <td>{booking.no_of_seats}</td>
-                    <td>{new Date(booking.date).toLocaleDateString()}</td>
+                    <td>{booking.eventId}</td>
+                    <td>{booking.userId}</td>
+                    <td>{booking.no_of_tickets}</td>
+                    <td>{booking.totalPrize}</td>
                   </tr>
                 ))}
               </tbody>
@@ -178,9 +180,8 @@ const AdminPage: React.FC = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>User ID</th>
-                  <th>Event ID</th>
-                  <th>Amount</th>
+                  <th>BookingID</th>
+                  <th>Card Number</th>
                   <th>Date</th>
                 </tr>
               </thead>
@@ -188,9 +189,8 @@ const AdminPage: React.FC = () => {
                 {payments.map((payment) => (
                   <tr key={payment._id}>
                     <td>{payment._id}</td>
-                    <td>{payment.user_id}</td>
-                    <td>{payment.event_id}</td>
-                    <td>${payment.amount.toFixed(2)}</td>
+                    <td>{payment.bookingId}</td>
+                    <td>{payment.cardNumber}</td>
                     <td>{new Date(payment.date).toLocaleDateString()}</td>
                   </tr>
                 ))}

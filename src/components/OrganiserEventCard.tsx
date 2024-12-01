@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import './OrganiserEventCard.css';
 
@@ -5,12 +6,14 @@ interface Booking {
   id: string;
   eventId: string;
   userId: string;
-  seats: number;
-  bookingDate: string;
+  totalPrize: string;
+  no_of_tickets: number;
+  booking_status: string;
   paymentStatus: string;
 }
 
 interface Event {
+  _id: string;
   id: string;
   organizerId: string,
   title: string,
@@ -37,12 +40,21 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
   onDelete,
 }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [events, setevent] = useState<Booking[]>();;
 
-  const eventBookings = bookings.filter((booking) => booking.eventId === event.id);
+  // const eventBookings = bookings.filter((booking) => booking.eventId === event._id);
 
   const handlePopupClose = () => setPopupVisible(false);
-
   
+  const getBookings = async (eventId: string) => {
+    console.log("event",event)
+    const response = await axios.get(`http://localhost:3001/api/events/booking/${eventId}`);
+    console.log("response",response.data)
+    setevent(response.data)
+    setPopupVisible(true);
+  };
+
+
 
   return (
     <div className="event-card">
@@ -55,7 +67,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
       <div className="card-buttons">
         <button onClick={() => onEdit(event)}>Edit</button>
         <button onClick={() => onDelete(event.id)}>Delete</button>
-        <button onClick={() => setPopupVisible(true)}>Bookings</button>
+        <button onClick={() => getBookings(event.id)}>Bookings</button>
       </div>
 
       {isPopupVisible && (
@@ -65,7 +77,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the popup
           >
             <h2>Bookings for {event.title}</h2>
-            {eventBookings.length > 0 ? (
+            {events?(
               <table className="booking-table">
                 <thead>
                   <tr>
@@ -77,15 +89,14 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {eventBookings.map((booking) => (
-                    <tr key={booking.id}>
-                      <td>{booking.id}</td>
-                      <td>{booking.userId}</td>
-                      <td>{booking.seats}</td>
-                      <td>{booking.bookingDate}</td>
-                      <td>{booking.paymentStatus}</td>
-                    </tr>
-                  ))}
+                {events.map((booking) => (
+                  <tr key={booking.id}>
+                    <td>{booking.id}</td>
+                    <td>{booking.eventId}</td>
+                    <td>{booking.userId}</td>
+                    <td>{booking.no_of_tickets}</td>
+                  </tr>
+                ))}
                 </tbody>
               </table>
             ) : (

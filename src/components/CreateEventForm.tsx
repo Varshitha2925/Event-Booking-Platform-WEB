@@ -65,19 +65,6 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       
     };
     onCreate(newEvent);
-    // const onEdit = async (event: Event) => {
-    //   try {
-  
-    //     console.log("editEvent",event)
-    //     const response = await axios.put(`http://localhost:3001/api/events/${event._id}`, event); // Replace API URL
-    //     console.log('Event updated:', response.data);
-    //     // navigate('/organizer-dashboard'); // Redirect after success
-    //   } catch (error) {
-    //     console.error('Error updating event:', error);
-    //   }
-  
-  
-    // }
   };
 
   return (

@@ -35,7 +35,7 @@ const Login: React.FC = () => {
       console.error('Login error:', err);
     }
   }
-  else{
+  else if(role === "organizer"){
     try {
       const response = await axios.post('http://localhost:3001/api/auth/login', {
         email,
@@ -56,6 +56,9 @@ const Login: React.FC = () => {
       console.error('Login error:', err);
     }
   
+  }
+  else{
+    navigate('/admin-dashboard');
   }
   };
 
@@ -91,6 +94,7 @@ const Login: React.FC = () => {
         >
           <option value="user">User</option>
           <option value="organizer">Organizer</option>
+          <option value="admin">Admin</option>
         </select>
 
         <button type="submit">Login</button>

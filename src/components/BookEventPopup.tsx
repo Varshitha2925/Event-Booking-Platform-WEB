@@ -5,11 +5,11 @@ import './BookEventPopup.css';
 
 interface BookEventPopupProps {
   event: {
-    _id: string;
+    id: string;
     title: string;
     image: string;
     seatsAvailable: number;
-    ticketPrice: number;
+    price: number;
     type: string;
   },
   onClose: () => void;
@@ -25,11 +25,11 @@ const BookEventPopup: React.FC<BookEventPopupProps> = ({ event, onClose }) => {
 
     try {
       const booking = {
-        eventId:event._id,
+        eventId:event.id,
         userId:localStorage.getItem("userId"),
         no_of_tickets: seats,
-        totalPrize: (event.ticketPrice)*seats,
-        booking_status:""
+        totalPrize: (event.price)*seats,
+        booking_status: ""
       }
 
       console.log("events",booking)
