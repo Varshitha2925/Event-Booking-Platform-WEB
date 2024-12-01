@@ -11,6 +11,7 @@ import './CreateEventForm.css';
 //   eventType: string;
 // }
  interface Event {
+  id:string,
   organizerId: string,
   title: string,
   location: string,
@@ -51,6 +52,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
 
   const handleSubmit = () => {
     const newEvent: Event = {
+      id: eventToEdit ? eventToEdit.id : Math.random().toString(36).substr(2, 9),
       title,
       location,
       date,
@@ -59,9 +61,23 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       organizerId: '',
       duration: 0,
       price: 0,
-      type
+      type,
+      
     };
     onCreate(newEvent);
+    // const onEdit = async (event: Event) => {
+    //   try {
+  
+    //     console.log("editEvent",event)
+    //     const response = await axios.put(`http://localhost:3001/api/events/${event._id}`, event); // Replace API URL
+    //     console.log('Event updated:', response.data);
+    //     // navigate('/organizer-dashboard'); // Redirect after success
+    //   } catch (error) {
+    //     console.error('Error updating event:', error);
+    //   }
+  
+  
+    // }
   };
 
   return (

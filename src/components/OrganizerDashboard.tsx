@@ -13,6 +13,7 @@ import './OrganizerDashboard.css';
 //   ticketsSold: number;
 //   type: string;
 interface Event {
+  id:any,
   organizerId: any,
   title: string,
   location: string,
@@ -54,10 +55,23 @@ const OrganizerDashboard: React.FC = () => {
 
   const handleCreateEvent = async (newEvent: Event) => {
     if (eventToEdit) {
-      // Editing an existing event
-      // setevent((prevEvents) =>
-      //   prevEvents.map((event) => (event._id === eventToEdit._id ? newEvent : event))
-      // );
+      // Creating a new event
+      console.log("newEvent" , newEvent)
+      // setevent((prevEvents) => [...prevEvents, newEvent]);
+      try {
+        newEvent.organizerId = userId
+        console.log("userID", userId)
+        console.log("newEvent", newEvent)
+        const response = await axios.put(`http://localhost:3001/api/events/${newEvent.id}`,{
+          newEvent
+        });
+        console.log("DATA" , response.data)
+        
+        // setevent(response.data);
+        console.log("events",response.data)
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
       
     } else {
       // Creating a new event
@@ -82,8 +96,10 @@ const OrganizerDashboard: React.FC = () => {
     setIsPopupVisible(false);
   };
 
-  const handleDeleteEvent = (eventId: string) => {
-    setevent((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+  const handleDeleteEvent = async (eventId: string) => {
+    // setevent((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+    const response = await axios.delete(`http://localhost:3001/api/events/${eventId}`);
+    console.log("DATA" , response.data)
   };
 
   const handleEditEvent = (event: Event) => {
@@ -94,7 +110,7 @@ const OrganizerDashboard: React.FC = () => {
   return (
     <div className="organizer-dashboard">
       <div className="dashboard-header">
-        <h1>My Events</h1>
+        <h1> My Events </h1>
         <button
           className="create-event-button"
           onClick={() => {
@@ -112,7 +128,7 @@ const OrganizerDashboard: React.FC = () => {
             key={event.organizerId}
             event={event}
             onEdit={handleEditEvent}
-            onDelete={handleDeleteEvent} bookings={[]}          />
+            onDelete={handleDeleteEvent} bookings={[]} />
         ))}
       </div>
 
