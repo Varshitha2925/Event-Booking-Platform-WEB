@@ -64,6 +64,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
       <p>Capacity: {event.capacity}</p>
       <p>Tickets Sold: {event.ticketSold}</p>
       <p>Type: {event.type}</p>
+      <p>Price: {event.price}</p>
       <div className="card-buttons">
         <button onClick={() => onEdit(event)}>Edit</button>
         <button onClick={() => onDelete(event.id)}>Delete</button>

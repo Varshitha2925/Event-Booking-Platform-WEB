@@ -37,6 +37,18 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const deleteEvents = async (eventID:any) => {
+
+    try {
+      console.log("EVENTID" , eventID)
+      const response = await axios.delete(`http://localhost:3001/api/admin/events/${eventID}`);
+      setEvents(response.data);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+
+  }
+
   const fetchBookings = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/bookings');
@@ -100,6 +112,7 @@ const AdminPage: React.FC = () => {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Role</th>
+                  {/* <th>Actions</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -111,6 +124,12 @@ const AdminPage: React.FC = () => {
                     <td>{user.email}</td>
                     <td>{user.phone}</td>
                     <td>{user.role}</td>
+                    {/* <td>
+                    {<div className="button-container">
+                    <button className="primary-button">Block User</button>
+                    <button className="secondary-button">Unblock Event</button>
+                    </div>}
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
@@ -129,6 +148,7 @@ const AdminPage: React.FC = () => {
                   <th>Date</th>
                   <th>Capacity</th>
                   <th>Type</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -140,6 +160,11 @@ const AdminPage: React.FC = () => {
                     <td>{new Date(event.date).toLocaleDateString()}</td>
                     <td>{event.capacity}</td>
                     <td>{event.type}</td>
+                    <td>
+                    {<div className="button-container">
+                    <button className="primary-button" onClick={() => deleteEvents(event.id)}>Remove Event</button>
+                    </div>}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -97,9 +97,7 @@ const OrganizerDashboard: React.FC = () => {
   };
 
   const handleDeleteEvent = async (eventId: string) => {
-    // setevent((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
-    const response = await axios.delete(`http://localhost:3001/api/events/${eventId}`);
-    console.log("DATA" , response.data)
+    await axios.delete(`http://localhost:3001/api/events/${eventId}`);
   };
 
   const handleEditEvent = (event: Event) => {
@@ -128,7 +126,8 @@ const OrganizerDashboard: React.FC = () => {
             key={event.organizerId}
             event={event}
             onEdit={handleEditEvent}
-            onDelete={handleDeleteEvent} bookings={[]} />
+            onDelete={handleDeleteEvent} 
+            bookings={[]} />
         ))}
       </div>
 

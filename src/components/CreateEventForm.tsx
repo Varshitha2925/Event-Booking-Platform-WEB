@@ -39,6 +39,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
   const [date, setDate] = useState('');
   const [capacity, setCapacity] = useState(0);
   const [type, setEventType] = useState('Paid');
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     if (eventToEdit) {
@@ -47,6 +48,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       setDate(eventToEdit.date);
       setCapacity(eventToEdit.capacity);
       setEventType(eventToEdit.type);
+      setPrice(eventToEdit.price);
     }
   }, [eventToEdit]);
 
@@ -60,7 +62,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       ticketSold: eventToEdit ? eventToEdit.ticketSold : 0,
       organizerId: '',
       duration: 0,
-      price: 0,
+      price,
       type,
       
     };
@@ -93,6 +95,14 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
+        <label>
+          Price:
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
           />
         </label>
         <label>

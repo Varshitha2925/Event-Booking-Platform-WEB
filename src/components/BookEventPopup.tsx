@@ -8,7 +8,8 @@ interface BookEventPopupProps {
     id: string;
     title: string;
     image: string;
-    seatsAvailable: number;
+    capacity: number;
+    ticketSold:number;
     price: number;
     type: string;
   },
