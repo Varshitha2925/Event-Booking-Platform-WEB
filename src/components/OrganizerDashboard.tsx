@@ -19,8 +19,7 @@ interface Event {
   title: string,
   location: string,
   capacity: number,
-  startdate: string,
-  enddate:string,
+  date: string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -102,6 +101,7 @@ const OrganizerDashboard: React.FC = () => {
 
   const handleDeleteEvent = async (eventId: string) => {
     await axios.delete(`http://localhost:3001/api/events/${eventId}`);
+    console.log("DATA")
     navigate(0)
   };
   

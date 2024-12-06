@@ -78,6 +78,7 @@
 
 .booking-table th,
 .booking-table td {
+  color: #333;
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;

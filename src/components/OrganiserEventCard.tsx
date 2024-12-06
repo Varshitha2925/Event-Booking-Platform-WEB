@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './OrganiserEventCard.css';
 
 interface Booking {
-  id: string;
+  _id: string;
   eventId: string;
   userId: string;
   totalPrize: string;
@@ -19,8 +19,7 @@ interface Event {
   title: string,
   location: string,
   capacity: number,
-  startdate: string,
-  enddate:string,
+  date: string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -61,8 +60,8 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
     <div className="event-card">
       <h3>{event.title}</h3>
       <p>Location: {event.location}</p>
-      <p>StartDate: {event.startdate}</p>
-      <p>EndDate: {event.enddate}</p>
+      <p>Date: {event.date}</p>
+      <p>Duration: {event.duration}</p>
       <p>Capacity: {event.capacity}</p>
       <p>Tickets Sold: {event.ticketSold}</p>
       <p>Type: {event.type}</p>
@@ -84,7 +83,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
               <table className="booking-table">
                 <thead>
                   <tr>
-                    <th>Booking ID</th>
+                    {/* <th>Booking ID</th> */}
                     <th>User ID</th>
                     <th>Seats</th>
                     <th>Booking Date</th>
@@ -93,11 +92,12 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
                 </thead>
                 <tbody>
                 {events.map((booking) => (
-                  <tr key={booking.id}>
-                    <td>{booking.id}</td>
+                  <tr key={booking._id}>
+                    {/* <td>{booking._id}</td> */}
                     <td>{booking.eventId}</td>
                     <td>{booking.userId}</td>
                     <td>{booking.no_of_tickets}</td>
+                    <td>{booking.paymentStatus}</td>
                   </tr>
                 ))}
                 </tbody>

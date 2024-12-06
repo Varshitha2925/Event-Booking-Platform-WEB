@@ -16,8 +16,7 @@ import './CreateEventForm.css';
   title: string,
   location: string,
   capacity: number,
-  startdate: string,
-  enddate:string,
+  date: string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -37,18 +36,19 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
 }) => {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
-  const [startdate, setDate] = useState('');
+  const [date, setDate] = useState('');
   const [enddate, setendDate] = useState('');
   const [capacity, setCapacity] = useState(0);
   const [type, setEventType] = useState('Paid');
   const [price, setPrice] = useState(0);
+  const [duration, setduration] = useState(0);
 
   useEffect(() => {
     if (eventToEdit) {
       setTitle(eventToEdit.title);
       setLocation(eventToEdit.location);
-      setDate(eventToEdit.startdate);
-      setendDate(eventToEdit.enddate);
+      setDate(eventToEdit.date);
+      setduration(eventToEdit.duration);
       setCapacity(eventToEdit.capacity);
       setEventType(eventToEdit.type);
       setPrice(eventToEdit.price);
@@ -60,12 +60,11 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       id: eventToEdit ? eventToEdit.id : Math.random().toString(36).substr(2, 9),
       title,
       location,
-      startdate,
-      enddate,
+      date,
       capacity,
       ticketSold: eventToEdit ? eventToEdit.ticketSold : 0,
       organizerId: '',
-      duration: 0,
+      duration,
       price,
       type,
       
@@ -94,19 +93,19 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
           />
         </label>
         <label>
-          Start Date:
+          Date:
           <input
             type="date"
-            value={startdate}
+            value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </label>
         <label>
-          End Date:
+          Duration(in hours):
           <input
-            type="date"
-            value={enddate}
-            onChange={(e) => setendDate(e.target.value)}
+            type="number"
+            value={duration}
+            onChange={(e) => setduration(Number(e.target.value))}
           />
         </label>
         <label>
