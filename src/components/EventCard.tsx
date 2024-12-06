@@ -4,13 +4,17 @@ import './styles.css';
 
 interface EventCardProps {
   event: {
-    id: string;
-    title: string;
-    image: string;
-    capacity: number;
-    ticketSold:number;
-    price: number;
-    type: string;
+  id:string,
+  organizerId: any,
+  title: string,
+  location: string,
+  capacity: number,
+  startdate: string,
+  enddate:string,
+  duration: number, // in hours
+  type: string,
+  price: number,
+  ticketSold: number
   };
 }
 
@@ -23,6 +27,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <h3>{event.title}</h3>
       <p>Seats Left: {event.capacity - event.ticketSold}</p>
       <p>Price: {event.price > 0 ? `$${event.price}` : "Free"}</p>
+      <p>StartDate: {event.startdate}</p>
+      <p>EndDate: {event.enddate}</p>
       <button onClick={() => setShowPopup(true)}>Book Now</button>
       {showPopup && <BookEventPopup event={event} onClose={() => setShowPopup(false)} />}
     </div>

@@ -5,13 +5,17 @@ import './BookEventPopup.css';
 
 interface BookEventPopupProps {
   event: {
-    id: string;
-    title: string;
-    image: string;
-    capacity: number;
-    ticketSold:number;
-    price: number;
-    type: string;
+    id:string,
+  organizerId: string,
+  title: string,
+  location: string,
+  capacity: number,
+  startdate: string,
+  enddate:string,
+  duration: number, // in hours
+  type: string,
+  price: number,
+  ticketSold: number
   },
   onClose: () => void;
 }

@@ -28,7 +28,9 @@ const PaymentPage: React.FC = () => {
       try {
         const response = await axios.post('http://localhost:3001/api/users/payment', paymentData);
         console.log('Payment Successful:', response.data);
+        window.alert('Event booked sucessfully');
         navigate(`/dashboard`);
+        
         setSuccess(true);
       } catch (error) {
         console.error('Payment Failed:', error);

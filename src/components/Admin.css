@@ -62,4 +62,14 @@
   table tr:hover {
     background-color: #f1f1f1;
   }
-  
+  .logout-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+    flex : right;
+    /* margin-left: 100%; */
+  }

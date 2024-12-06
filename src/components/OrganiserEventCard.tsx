@@ -14,12 +14,13 @@ interface Booking {
 
 interface Event {
   _id: string;
-  id: string;
+  id:string,
   organizerId: string,
   title: string,
   location: string,
   capacity: number,
-  date: string,
+  startdate: string,
+  enddate:string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -60,7 +61,8 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
     <div className="event-card">
       <h3>{event.title}</h3>
       <p>Location: {event.location}</p>
-      <p>Date: {event.date}</p>
+      <p>StartDate: {event.startdate}</p>
+      <p>EndDate: {event.enddate}</p>
       <p>Capacity: {event.capacity}</p>
       <p>Tickets Sold: {event.ticketSold}</p>
       <p>Type: {event.type}</p>

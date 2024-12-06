@@ -1,0 +1,30 @@
+.logout-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    /* float: right;
+    flex : right; */
+    /* margin-left: 100%; */
+}
+.my-bookings-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    
+    /* margin-left: 100%; */
+  }
+
+.user-dashboard{
+    padding:10px;
+}
+
+.event-list{
+    padding: 10px;
+}

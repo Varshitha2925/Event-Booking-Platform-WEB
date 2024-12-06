@@ -54,6 +54,9 @@ const AdminPage: React.FC = () => {
       console.error('Error fetching events:', error);
     }
 
+    navigate(0);
+    setActiveTab('events')
+
   }
 
   const fetchBookings = async () => {
@@ -80,7 +83,7 @@ const AdminPage: React.FC = () => {
     
     <div className="admin-page">
       <h1>Admin Dashboard</h1>
-      <button onClick={logOut} className="my-bookings-btn">Log Out</button>
+      <button onClick={logOut} className="logout-btn">Log Out</button>
       <div className="tabs">
         <button
           className={activeTab === 'users' ? 'active' : ''}

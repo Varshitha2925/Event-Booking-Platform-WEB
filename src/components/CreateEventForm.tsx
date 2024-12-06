@@ -12,11 +12,12 @@ import './CreateEventForm.css';
 // }
  interface Event {
   id:string,
-  organizerId: string,
+  organizerId: any,
   title: string,
   location: string,
   capacity: number,
-  date: string,
+  startdate: string,
+  enddate:string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -36,7 +37,8 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
 }) => {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
-  const [date, setDate] = useState('');
+  const [startdate, setDate] = useState('');
+  const [enddate, setendDate] = useState('');
   const [capacity, setCapacity] = useState(0);
   const [type, setEventType] = useState('Paid');
   const [price, setPrice] = useState(0);
@@ -45,7 +47,8 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
     if (eventToEdit) {
       setTitle(eventToEdit.title);
       setLocation(eventToEdit.location);
-      setDate(eventToEdit.date);
+      setDate(eventToEdit.startdate);
+      setendDate(eventToEdit.enddate);
       setCapacity(eventToEdit.capacity);
       setEventType(eventToEdit.type);
       setPrice(eventToEdit.price);
@@ -57,7 +60,8 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       id: eventToEdit ? eventToEdit.id : Math.random().toString(36).substr(2, 9),
       title,
       location,
-      date,
+      startdate,
+      enddate,
       capacity,
       ticketSold: eventToEdit ? eventToEdit.ticketSold : 0,
       organizerId: '',
@@ -90,11 +94,19 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
           />
         </label>
         <label>
-          Date:
+          Start Date:
           <input
             type="date"
-            value={date}
+            value={startdate}
             onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
+        <label>
+          End Date:
+          <input
+            type="date"
+            value={enddate}
+            onChange={(e) => setendDate(e.target.value)}
           />
         </label>
         <label>

@@ -14,12 +14,13 @@ import './OrganizerDashboard.css';
 //   ticketsSold: number;
 //   type: string;
 interface Event {
-  id:any,
+  id:string,
   organizerId: any,
   title: string,
   location: string,
   capacity: number,
-  date: string,
+  startdate: string,
+  enddate:string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -69,7 +70,7 @@ const OrganizerDashboard: React.FC = () => {
           newEvent
         });
         console.log("DATA" , response.data)
-        
+        navigate(0)
         // setevent(response.data);
         console.log("events",response.data)
       } catch (error) {
@@ -88,7 +89,7 @@ const OrganizerDashboard: React.FC = () => {
           newEvent
         });
         console.log("DATA" , response.data)
-        
+        navigate(0)
         // setevent(response.data);
         console.log("events",response.data)
       } catch (error) {
@@ -101,6 +102,7 @@ const OrganizerDashboard: React.FC = () => {
 
   const handleDeleteEvent = async (eventId: string) => {
     await axios.delete(`http://localhost:3001/api/events/${eventId}`);
+    navigate(0)
   };
   
 
@@ -126,7 +128,7 @@ const OrganizerDashboard: React.FC = () => {
         >
           Create Event
         </button>
-        <button onClick={logOut} className="my-bookings-btn">Log Out</button>
+        <button onClick={logOut} className="logout-btn">Log Out</button>
 
       </div>
 

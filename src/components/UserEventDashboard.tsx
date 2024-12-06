@@ -3,6 +3,7 @@ import EventCard from "./EventCard";
 // import { events } from "./mockData";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './UserEventDashboard.css';
 
 const UserEventDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const UserEventDashboard: React.FC = () => {
     <div className="user-dashboard">
       <h1>Events</h1>
       <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
-      <button onClick={logOut} className="my-bookings-btn">Log Out</button>
+      <button onClick={logOut} className="logout-btn">Log Out</button>
       <div className="event-list">
         {events.map((event) => (
           <EventCard key={event._id} event={event} />
