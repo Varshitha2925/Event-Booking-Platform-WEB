@@ -33,8 +33,8 @@ const Register: React.FC = () => {
         });
       
        
-  
-        if (response.data.success) {
+        console.log("response:",response)
+        if (response.data === "Organizer registered successfully") {
           console.log('Registration successful');
           navigate('/'); // Redirect to login page
         } else {
