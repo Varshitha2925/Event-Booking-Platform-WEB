@@ -187,7 +187,7 @@ const AdminPage: React.FC = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Event ID</th>
+                  <th>Event Name</th>
                   <th>User ID</th>
                   <th>No. of Seats</th>
                   <th>Prize</th>
@@ -197,7 +197,7 @@ const AdminPage: React.FC = () => {
                 {bookings.map((booking) => (
                   <tr key={booking._id}>
                     <td>{booking._id}</td>
-                    <td>{booking.eventId}</td>
+                    <td>{booking.title}</td>
                     <td>{booking.userId}</td>
                     <td>{booking.no_of_tickets}</td>
                     <td>{booking.totalPrize}</td>

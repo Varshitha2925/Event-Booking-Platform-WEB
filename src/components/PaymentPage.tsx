@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './PaymentPage.css';
 
 const PaymentPage: React.FC = () => {
@@ -11,6 +11,7 @@ const PaymentPage: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const { bookingId } = useParams<{ bookingId: string }>();
   console.log("eventId", bookingId)
+  const navigate = useNavigate();
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -27,8 +28,7 @@ const PaymentPage: React.FC = () => {
       try {
         const response = await axios.post('http://localhost:3001/api/users/payment', paymentData);
         console.log('Payment Successful:', response.data);
-        
-        
+        navigate(`/dashboard`);
         setSuccess(true);
       } catch (error) {
         console.error('Payment Failed:', error);

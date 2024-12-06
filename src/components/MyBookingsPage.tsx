@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './MyBookingsPage.css';
 
 interface Booking {
+  title: string;
   _id: string;
   eventId: string;
   userId: string;
@@ -69,7 +70,7 @@ const MyBookingsPage: React.FC = () => {
         <tbody>
           {bookings.map((booking) => (
             <tr key={booking._id}>
-              <td>{booking.eventId}</td>
+              <td>{booking.title}</td>
               <td>{booking.no_of_tickets}</td>
               <td>${booking.totalPrize}</td>
               <td>{booking.booking_status}</td>

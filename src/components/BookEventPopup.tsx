@@ -27,6 +27,7 @@ const BookEventPopup: React.FC<BookEventPopupProps> = ({ event, onClose }) => {
     try {
       const booking = {
         eventId:event.id,
+        title:event.title,
         userId:localStorage.getItem("userId"),
         no_of_tickets: seats,
         totalPrize: (event.price)*seats,
@@ -58,10 +59,10 @@ const BookEventPopup: React.FC<BookEventPopupProps> = ({ event, onClose }) => {
         <div className="popup-content">
           <label htmlFor="seats">Number of Seats:</label>
           <input
-            type="number"
-            id="seats"
-            value={seats}
-            min={1}
+            type = "number"
+            id = "seats"
+            value = {seats}
+            min = {1}
             onChange={(e) => setSeats(Number(e.target.value))}
           />
         </div>

@@ -19,7 +19,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
 
   return (
     <div className="event-card">
-      <img src={event.image} alt={event.title} />
+      {/* <img src={event.image} alt={event.title} /> */}
       <h3>{event.title}</h3>
       <p>Seats Left: {event.capacity - event.ticketSold}</p>
       <p>Price: {event.price > 0 ? `$${event.price}` : "Free"}</p>
