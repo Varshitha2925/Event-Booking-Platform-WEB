@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CreateEventPopup from './CreateEventForm';
 import OrganizerEventCard from './OrganiserEventCard';
 import './OrganizerDashboard.css';
@@ -27,6 +28,7 @@ interface Event {
   
 
 const OrganizerDashboard: React.FC = () => {
+  const navigate = useNavigate();
 
   const [events, setevent] = useState<any[]>([]);
 
@@ -54,6 +56,7 @@ const OrganizerDashboard: React.FC = () => {
   };
 
   const handleCreateEvent = async (newEvent: Event) => {
+    
     if (eventToEdit) {
       // Creating a new event
       console.log("newEvent" , newEvent)
@@ -99,11 +102,16 @@ const OrganizerDashboard: React.FC = () => {
   const handleDeleteEvent = async (eventId: string) => {
     await axios.delete(`http://localhost:3001/api/events/${eventId}`);
   };
+  
 
   const handleEditEvent = (event: Event) => {
     setEventToEdit(event);
     setIsPopupVisible(true);
   };
+
+  const logOut = () => {
+    navigate('/')
+  }
 
   return (
     <div className="organizer-dashboard">
@@ -118,6 +126,8 @@ const OrganizerDashboard: React.FC = () => {
         >
           Create Event
         </button>
+        <button onClick={logOut} className="my-bookings-btn">Log Out</button>
+
       </div>
 
       <div className="event-list">

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Admin.css'; // Add CSS styles for the admin page
 
 // Admin Page Component
@@ -9,6 +10,12 @@ const AdminPage: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
+
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    navigate('/')
+  }
 
   // Fetch data based on active tab
   useEffect(() => {
@@ -70,8 +77,10 @@ const AdminPage: React.FC = () => {
   };
 
   return (
+    
     <div className="admin-page">
       <h1>Admin Dashboard</h1>
+      <button onClick={logOut} className="my-bookings-btn">Log Out</button>
       <div className="tabs">
         <button
           className={activeTab === 'users' ? 'active' : ''}

@@ -11,6 +11,20 @@ interface Booking {
   booking_status: string;
   createdAt: string;
 }
+interface Event {
+  _id: string;
+  id: string;
+  organizerId: string,
+  title: string,
+  location: string,
+  capacity: number,
+  date: string,
+  duration: number, // in hours
+  type: string,
+  price: number,
+  ticketSold: number
+}
+
 
 const MyBookingsPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -45,7 +59,7 @@ const MyBookingsPage: React.FC = () => {
       <table className="bookings-table">
         <thead>
           <tr>
-            <th>Event ID</th>
+            <th>Event Name</th>
             <th>No. of Tickets</th>
             <th>Total Price</th>
             <th>Status</th>

@@ -28,11 +28,15 @@ const UserEventDashboard: React.FC = () => {
   const handleMyBookings = () => {
     navigate('/my-bookings'); // Navigate to the desired route
   };
+  const logOut = () => {
+    navigate('/')
+  }
 
   return (
     <div className="user-dashboard">
       <h1>Events</h1>
       <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
+      <button onClick={logOut} className="my-bookings-btn">Log Out</button>
       <div className="event-list">
         {events.map((event) => (
           <EventCard key={event._id} event={event} />
