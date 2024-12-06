@@ -1,6 +1,6 @@
+import moment from "moment";
 import React, { useEffect, useState } from 'react';
 import './CreateEventForm.css';
-
 // interface Event {
 //   id: string;
 //   title: string;
@@ -42,12 +42,12 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
   const [type, setEventType] = useState('Paid');
   const [price, setPrice] = useState(0);
   const [duration, setduration] = useState(0);
-
   useEffect(() => {
+
     if (eventToEdit) {
       setTitle(eventToEdit.title);
       setLocation(eventToEdit.location);
-      setDate(eventToEdit.date);
+      setDate(moment(eventToEdit.date).format("YYYY-MM-DD"));
       setduration(eventToEdit.duration);
       setCapacity(eventToEdit.capacity);
       setEventType(eventToEdit.type);
@@ -67,8 +67,9 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       duration,
       price,
       type,
-      
     };
+    console.log("date",newEvent.date)
+    console.log("newEvent",newEvent)
     onCreate(newEvent);
   };
 

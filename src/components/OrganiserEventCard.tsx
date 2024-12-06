@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import React, { useState } from 'react';
 import './OrganiserEventCard.css';
 
@@ -60,7 +61,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
     <div className="event-card">
       <h3>{event.title}</h3>
       <p>Location: {event.location}</p>
-      <p>Date: {event.date}</p>
+      <p>Date: {moment(event.date).format("YYYY/MM/DD")}</p>
       <p>Duration: {event.duration}</p>
       <p>Capacity: {event.capacity}</p>
       <p>Tickets Sold: {event.ticketSold}</p>
