@@ -10,6 +10,7 @@ const AdminPage: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
+  const [organizers, setOrganizers] = useState<any[]>([])
 
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const AdminPage: React.FC = () => {
     if (activeTab === 'events') fetchEvents();
     if (activeTab === 'bookings') fetchBookings();
     if (activeTab === 'payments') fetchPayments();
+    if (activeTab === 'organizer') fetchOrganizers();
   }, [activeTab]);
 
   const fetchUsers = async () => {
@@ -79,6 +81,28 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const fetchOrganizers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/admin/organizer');
+      console.log("organizers",response.data);
+      setOrganizers(response.data);
+      console.log("Organizer", response.data)
+    } catch (error) {
+      console.error('Error fetching payments:', error);
+    }
+  }
+  const blockUser = async (userId: any) => {
+    try{
+      const response = await axios.patch(`http://localhost:3001/api/admin/users/${userId}`);
+      console.log("organizers",response.data);
+      setOrganizers(response.data);
+      console.log("Organizer", response.data)
+
+    }catch (error){
+
+    }
+  }
+
   return (
     
     <div className="admin-page">
@@ -109,6 +133,13 @@ const AdminPage: React.FC = () => {
         >
           Payments
         </button>
+
+        <button
+          className={activeTab === 'organizer' ? 'active' : ''}
+          onClick={() => setActiveTab('organizer')}
+        >
+          Organizers
+        </button>
       </div>
 
       <div className="content">
@@ -123,8 +154,8 @@ const AdminPage: React.FC = () => {
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Role</th>
-                  {/* <th>Actions</th> */}
+                  <th>Statues</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,13 +166,13 @@ const AdminPage: React.FC = () => {
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td>{user.phone}</td>
-                    <td>{user.role}</td>
-                    {/* <td>
+                    <td>{user.blocked === "true" ?"blocked":"unblocked" }</td>
+                    <td>
                     {<div className="button-container">
-                    <button className="primary-button">Block User</button>
-                    <button className="secondary-button">Unblock Event</button>
+                    <button className="primary-button" onClick={() => blockUser(user._id)}>Block User</button>
+                    {/* <button className="secondary-button">Unblock Event</button> */}
                     </div>}
-                    </td> */}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -229,6 +260,42 @@ const AdminPage: React.FC = () => {
                     <td>{payment.bookingId}</td>
                     <td>{payment.cardNumber}</td>
                     <td>{new Date(payment.date).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {activeTab === 'organizer' && (
+          <div className="users-section">
+            <h2>Organizer</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Role</th>
+                  {/* <th>Actions</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {organizers.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user._id}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>Organizer</td>
+                    {/* <td>
+                    {<div className="button-container">
+                    <button className="primary-button">Block User</button>
+                    <button className="secondary-button">Unblock Event</button>
+                    </div>}
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
