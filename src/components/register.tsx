@@ -11,6 +11,7 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user'); // Default role is "user"
   const [error, setError] = useState('');
+  const [ssn, setssn] = useState('')
   const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -59,7 +60,8 @@ const Register: React.FC = () => {
           "lastName":lastName,
           "email":email,
           "phone":phone,
-          "password":password
+          "password":password,
+          "ssn":ssn
         });
         console.log("response", response)
         if (response.data) {
@@ -134,6 +136,21 @@ const Register: React.FC = () => {
           <option value="user">User</option>
           <option value="organizer">Organizer</option>
         </select>
+
+
+        {role === "organizer" && (
+        <div>
+          <label htmlFor="organizerDetails">Organizer Details:</label>
+          <input
+            type="text"
+            id="ssn"
+            value={ssn}
+            onChange={(e) => setssn(e.target.value)}
+            placeholder="Enter organizer details"
+          />
+        </div>
+      )}
+
 
         {error && <p className="error-message">{error}</p>}
 

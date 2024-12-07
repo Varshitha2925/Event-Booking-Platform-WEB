@@ -16,7 +16,10 @@ import './CreateEventForm.css';
   title: string,
   location: string,
   capacity: number,
-  date: string,
+  startdate: string,
+  enddate: string,
+  startTime: string,
+  endTime:string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -36,10 +39,12 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
 }) => {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
-  const [date, setDate] = useState('');
-  const [enddate, setendDate] = useState('');
+  const [startdate, setDate] = useState('');
+  const [enddate, setenddate] = useState('');
   const [capacity, setCapacity] = useState(0);
   const [type, setEventType] = useState('Paid');
+  const [startTime, setstartTime] = useState('');
+  const [endTime, setendTime] = useState('');
   const [price, setPrice] = useState(0);
   const [duration, setduration] = useState(0);
   useEffect(() => {
@@ -47,7 +52,8 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
     if (eventToEdit) {
       setTitle(eventToEdit.title);
       setLocation(eventToEdit.location);
-      setDate(moment(eventToEdit.date).format("YYYY-MM-DD"));
+      setDate(moment(eventToEdit.startdate).format("YYYY-MM-DD"));
+      setenddate(moment(eventToEdit.enddate).format("YYYY-MM-DD"))
       setduration(eventToEdit.duration);
       setCapacity(eventToEdit.capacity);
       setEventType(eventToEdit.type);
@@ -60,7 +66,10 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       id: eventToEdit ? eventToEdit.id : Math.random().toString(36).substr(2, 9),
       title,
       location,
-      date,
+      startdate,
+      enddate,
+      startTime,
+      endTime,
       capacity,
       ticketSold: eventToEdit ? eventToEdit.ticketSold : 0,
       organizerId: '',
@@ -68,7 +77,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       price,
       type,
     };
-    console.log("date",newEvent.date)
+    console.log("date",newEvent.startdate)
     console.log("newEvent",newEvent)
     onCreate(newEvent);
   };
@@ -94,11 +103,35 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
           />
         </label>
         <label>
-          Date:
+          Start Date:
           <input
             type="date"
-            value={date}
+            value={startdate}
             onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
+        <label>
+          End Date:
+          <input   
+            type="date"
+            value={enddate}
+            onChange={(e) => setenddate(e.target.value)}
+          />
+        </label>
+        <label>
+          Start Time:
+          <input
+            type="text"
+            value={startTime}
+            onChange={(e) => setstartTime(e.target.value)}
+          />
+        </label>
+        <label>
+          End Time:
+          <input
+            type="text"
+            value={endTime}
+            onChange={(e) => setendTime(e.target.value)}
           />
         </label>
         <label>

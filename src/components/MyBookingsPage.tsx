@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MyBookingsPage.css';
 
 interface Booking {
@@ -31,7 +32,7 @@ const MyBookingsPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem('userId');
-  
+  const navigate = useNavigate();
   console.log()
   useEffect(() => {
     const fetchBookings = async () => {
@@ -49,7 +50,22 @@ const MyBookingsPage: React.FC = () => {
 
     fetchBookings();
   }, [userId]);
+  
+  const cancelBookings = async (bookingId: any) => {
+    try{
+      const response = await axios.delete(`http://localhost:3001/api/users//bookings/${bookingId}`);
+      navigate(0)
+      setBookings(response.data);
+      
+      console.log("DATA", response.data)
 
+      setLoading(false);
+    }
+    catch(error){
+      console.error('Error fetching bookings:', error);
+      setLoading(false);
+    }
+  }
   if (loading) {
     return <p>Loading your bookings...</p>;
   }
@@ -65,6 +81,7 @@ const MyBookingsPage: React.FC = () => {
             <th>Total Price</th>
             <th>Status</th>
             <th>Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -75,6 +92,9 @@ const MyBookingsPage: React.FC = () => {
               <td>${booking.totalPrize}</td>
               <td>{booking.booking_status}</td>
               <td>{new Date(booking.createdAt).toLocaleString()}</td>
+              <td>
+              <button className="primary-button" onClick={() => cancelBookings(booking._id)}>Cancel Boooking</button>
+              </td>
             </tr>
           ))}
         </tbody>

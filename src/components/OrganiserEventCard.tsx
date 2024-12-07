@@ -20,7 +20,10 @@ interface Event {
   title: string,
   location: string,
   capacity: number,
-  date: string,
+  startdate: string,
+  enddate: string,
+  startTime:string,
+  endTime: string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -61,9 +64,11 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
     <div className="event-card">
       <h3>{event.title}</h3>
       <p>Location: {event.location}</p>
-      <p>Date: {moment(event.date).format("YYYY/MM/DD")}</p>
+      <p>Start Date: {moment(event.startdate).format("MM/DD/YYYY")}</p>
+      <p>End Date: {moment(event.enddate).format("MM/DD/YYYY")}</p>
       <p>Duration: {event.duration}</p>
       <p>Capacity: {event.capacity}</p>
+      <p>Time: {event.startTime} - {event.endTime}</p>
       <p>Tickets Sold: {event.ticketSold}</p>
       <p>Type: {event.type}</p>
       <p>Price: {event.price}</p>

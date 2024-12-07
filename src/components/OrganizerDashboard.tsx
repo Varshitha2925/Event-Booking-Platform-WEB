@@ -19,7 +19,10 @@ interface Event {
   title: string,
   location: string,
   capacity: number,
-  date: string,
+  startdate: string,
+  enddate: string,
+  startTime: string,
+  endTime:string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -71,7 +74,7 @@ const OrganizerDashboard: React.FC = () => {
         console.log("DATA" , response.data)
         navigate(0)
         // setevent(response.data);
-        console.log("events",response.data)
+        // console.log("events",response.data)
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -82,14 +85,14 @@ const OrganizerDashboard: React.FC = () => {
       // setevent((prevEvents) => [...prevEvents, newEvent]);
       try {
         newEvent.organizerId = userId
-        console.log("userID", userId)
-        console.log("newEvent", newEvent)
+        // console.log("userID", userId)
+        // console.log("newEvent", newEvent)
         const response = await axios.post('http://localhost:3001/api/events',{
           newEvent
         });
         console.log("DATA" , response.data)
-        navigate(0)
-        // setevent(response.data);
+        // navigate(0)
+        setevent(response.data);
         console.log("events",response.data)
       } catch (error) {
         console.error('Error fetching users:', error);
