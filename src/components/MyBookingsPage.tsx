@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MyBookingsPage.css';
@@ -91,7 +92,7 @@ const MyBookingsPage: React.FC = () => {
               <td>{booking.no_of_tickets}</td>
               <td>${booking.totalPrize}</td>
               <td>{booking.booking_status}</td>
-              <td>{new Date(booking.createdAt).toLocaleString()}</td>
+              <td>{moment(booking.createdAt).format("MM/DD/YYYY")}</td>
               <td>
               <button className="primary-button" onClick={() => cancelBookings(booking._id)}>Cancel Boooking</button>
               </td>

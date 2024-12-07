@@ -53,7 +53,9 @@ const Register: React.FC = () => {
           lastName,
           email,
           phone,
-          password})
+          password,
+          ssn
+        })
   
         const response = await axios.post(`http://localhost:3001/api/auth/register`, {
           "firstName":firstName,
@@ -140,7 +142,7 @@ const Register: React.FC = () => {
 
         {role === "organizer" && (
         <div>
-          <label htmlFor="organizerDetails">Organizer Details:</label>
+          <label >Social Security Number:</label>
           <input
             type="text"
             id="ssn"

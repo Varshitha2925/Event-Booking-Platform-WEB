@@ -28,21 +28,38 @@ interface Event {
   price: number,
   ticketSold: number
 }
+
+interface Organizer {
+  firstName: string,
+  lastName: string,
+  email: string,
+  phone: string,
+  ssn: string
+}
   
 
 const OrganizerDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const [events, setevent] = useState<any[]>([]);
+  const [organizer, setorganizer] = useState<Organizer[]>([])
+
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setemail] = useState('');
+  const [phone, setphone] = useState('');
+  const [ssn, setssn] = useState('')
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [eventToEdit, setEventToEdit] = useState<Event | null>(null);
   const userId = localStorage.getItem("organizerId");
-  ;
+  const [isProfileVisible, setPopupVisible] = useState(false);
+
   
   useEffect(() => {
     
     fetchEvents()
+    fetchOrganizer()
   }, []);
 
   const fetchEvents = async () => {
@@ -52,6 +69,24 @@ const OrganizerDashboard: React.FC = () => {
       
       setevent(response.data);
       console.log("events",response.data)
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+    
+  };
+
+  const fetchOrganizer = async () => {
+    try {
+      console.log("userID", userId)
+      const response = await axios.get(`http://localhost:3001/api/auth/organizer/${userId}`);
+      
+      setorganizer(response.data);
+      setfirstName(response.data.firstName)
+      setLastName(response.data.lastName)
+      setemail(response.data.email)
+      setphone(response.data.phone)
+      setssn(response.data.ssn)
+      console.log("organizer",response.data)
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -107,11 +142,33 @@ const OrganizerDashboard: React.FC = () => {
     console.log("DATA")
     navigate(0)
   };
+
+  const handlePopupClose = () => setPopupVisible(false);
   
 
   const handleEditEvent = (event: Event) => {
     setEventToEdit(event);
     setIsPopupVisible(true);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log("userID", userId)
+      const response = await axios.post(`http://localhost:3001/api/auth/organizer/${userId}`,{
+        firstName,
+        lastName,
+        email,
+        phone,
+        ssn
+      });
+
+      
+      console.log("organizer",response.data)
+      setPopupVisible(false)
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+    
   };
 
   const logOut = () => {
@@ -131,6 +188,17 @@ const OrganizerDashboard: React.FC = () => {
         >
           Create Event
         </button>
+
+        <button
+          className="create-event-button"
+          onClick={() => {
+            setPopupVisible(true);
+          }}
+        >
+          My Profile
+        </button>
+        
+        
         <button onClick={logOut} className="logout-btn">Log Out</button>
 
       </div>
@@ -152,6 +220,62 @@ const OrganizerDashboard: React.FC = () => {
           onCreate={handleCreateEvent}
           eventToEdit={eventToEdit}
         />
+      )}
+      {isProfileVisible && (
+        <div className="popup-overlay" onClick={handlePopupClose}>
+          <div
+            className="popup-container"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the popup
+          >
+        <h2>Organizer Profile</h2>
+        <label>
+          First Name:
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setfirstName(e.target.value)}
+          />
+        </label>
+        <label>
+          Last Name:
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+          />
+        </label>
+        <label>
+          Phone:
+          <input   
+            type="text"
+            value={phone}
+            onChange={(e) => setphone(e.target.value)}
+          />
+        </label>
+        <label>
+          Social Security Number:
+          <input   
+            type="text"
+            value={ssn}
+            onChange={(e) => setssn(e.target.value)}
+          />
+        </label>
+        
+        <div className="popup-buttons">
+          <button onClick={handleSubmit}>Edit</button>
+          <button onClick={handlePopupClose}>Close</button>
+        </div>
+            
+          </div>
+        </div>
       )}
     </div>
   );

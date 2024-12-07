@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState } from "react";
 import BookEventPopup from "./BookEventPopup";
 import './styles.css';
@@ -11,6 +12,8 @@ interface EventCardProps {
   capacity: number,
   startdate: string,
   enddate:string,
+  startTime:string,
+  endTime: string,
   duration: number, // in hours
   type: string,
   price: number,
@@ -20,6 +23,7 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const [showPopup, setShowPopup] = useState(false);
+  
 
   return (
     <div className="event-card">
@@ -27,8 +31,9 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <h3>{event.title}</h3>
       <p>Seats Left: {event.capacity - event.ticketSold}</p>
       <p>Price: {event.price > 0 ? `$${event.price}` : "Free"}</p>
-      <p>StartDate: {event.startdate}</p>
-      <p>EndDate: {event.enddate}</p>
+      <p>StartDate: {moment(event.startdate).format("MM/DD/YYYY")}</p>
+      <p>EndDate:  {moment(event.enddate).format("MM/DD/YYYY")}</p>
+      <p>Time: {event.startTime} - {event.endTime}</p>
       <button onClick={() => setShowPopup(true)}>Book Now</button>
       {showPopup && <BookEventPopup event={event} onClose={() => setShowPopup(false)} />}
     </div>
