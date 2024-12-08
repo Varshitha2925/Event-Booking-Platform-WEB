@@ -112,7 +112,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
         </label>
         <label>
           End Date:
-          <input   
+          <input
             type="date"
             value={enddate}
             onChange={(e) => setenddate(e.target.value)}

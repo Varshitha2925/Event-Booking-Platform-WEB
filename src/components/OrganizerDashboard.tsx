@@ -126,8 +126,8 @@ const OrganizerDashboard: React.FC = () => {
           newEvent
         });
         console.log("DATA" , response.data)
-        // navigate(0)
-        setevent(response.data);
+        navigate(0)
+        // setevent(response.data);
         console.log("events",response.data)
       } catch (error) {
         console.error('Error fetching users:', error);

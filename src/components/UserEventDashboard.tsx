@@ -43,7 +43,8 @@ const UserEventDashboard: React.FC = () => {
 
   const fetchUser = async () => {
     try {
-      console.log("userID", userId)
+      // console.log("userID", userId)
+      const userId = localStorage.getItem("userId");
       const response = await axios.get(`http://localhost:3001/api/users/user/${userId}`);
       
       

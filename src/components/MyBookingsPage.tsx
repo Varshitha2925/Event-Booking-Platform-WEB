@@ -56,7 +56,7 @@ const MyBookingsPage: React.FC = () => {
     try{
       const response = await axios.delete(`http://localhost:3001/api/users//bookings/${bookingId}`);
       navigate(0)
-      setBookings(response.data);
+     
       
       console.log("DATA", response.data)
 
