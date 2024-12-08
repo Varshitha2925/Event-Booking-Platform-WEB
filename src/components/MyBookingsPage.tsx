@@ -96,6 +96,7 @@ const MyBookingsPage: React.FC = () => {
               <td>
               <button className="primary-button" onClick={() => cancelBookings(booking._id)}>Cancel Boooking</button>
               </td>
+
             </tr>
           ))}
         </tbody>
