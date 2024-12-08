@@ -20,6 +20,7 @@ const UserEventDashboard: React.FC = () => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
     fetchEvents()
+    fetchUser()
   }, []);
   console.log("userId", userId)
 
@@ -43,7 +44,7 @@ const UserEventDashboard: React.FC = () => {
   const fetchUser = async () => {
     try {
       console.log("userID", userId)
-      const response = await axios.get(`http://localhost:3001/api/auth/organizer/${userId}`);
+      const response = await axios.get(`http://localhost:3001/api/users/user/${userId}`);
       
       
       setfirstName(response.data.firstName)
@@ -61,7 +62,7 @@ const UserEventDashboard: React.FC = () => {
   const handleSubmit = async () => {
     try {
       console.log("userID", userId)
-      const response = await axios.post(`http://localhost:3001/api/auth/organizer/${userId}`,{
+      const response = await axios.post(`http://localhost:3001/api/users/user/${userId}`,{
         firstName,
         lastName,
         email,
