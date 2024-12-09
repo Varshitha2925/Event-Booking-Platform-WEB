@@ -15,7 +15,10 @@ const UserEventDashboard: React.FC = () => {
   const [lastName, setLastName] = useState('');
   const [email, setemail] = useState('');
   const [phone, setphone] = useState('');
-  const [ssn, setssn] = useState('')
+  const [ssn, setssn] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
@@ -26,7 +29,12 @@ const UserEventDashboard: React.FC = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/users/events');
+      const response = await axios.get('http://localhost:3001/api/users/events',{
+        params:{
+          startDate,
+          endDate
+        }
+      });
       setevent(response.data);
       console.log("events",response.data)
     } catch (error) {
@@ -80,13 +88,59 @@ const UserEventDashboard: React.FC = () => {
     
   };
 
+  // const handleDateChange = (e:any) => {
+  //   if (e.target.name === "startDate") {
+  //     setStartDate(e.target.value);
+  //   } else if (e.target.name === "endDate") {
+  //     setEndDate(e.target.value);
+  //   }
+  // };
+
+  // Fetch events based on date range
+  const handleFilter = async () => {
+    console.log("OK")
+    try {
+      const response = await axios.get('http://localhost:3001/api/users/events', {
+        params: { startDate, endDate },
+      });
+      console.log("response", response.data)
+      setevent(response.data);
+    } catch (error) {
+      console.error("Error fetching filtered events:", error);
+    }
+  };
+
   const handlePopupClose = () => setPopupVisible(false);
   return (
     <div className="user-dashboard">
+      
       <h1>Events</h1>
+      <div className="filters">
+        <div className = "from">
+        <label>
+          From Date
+        <input
+          type="date"
+          name="startDate"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        /></label>
+        </div>
+        <div className = "end">
+        <label>
+          To Date
+        <input
+          type="date"
+          name="endDate"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        /></label>
+        </div>
+        <button onClick={handleFilter}>Filter Events</button>
+      </div>
       <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
       <button
-          className="create-event-button"
+          className="mybookings"
           onClick={() => {
             setPopupVisible(true);
           }}
@@ -105,7 +159,7 @@ const UserEventDashboard: React.FC = () => {
             className="popup-container"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the popup
           >
-        <h2>Organizer Profile</h2>
+        <h2>User Profile</h2>
         <label>
           First Name:
           <input

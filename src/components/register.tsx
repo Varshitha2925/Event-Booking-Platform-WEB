@@ -11,7 +11,11 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user'); // Default role is "user"
   const [error, setError] = useState('');
-  const [ssn, setssn] = useState('')
+  const [ssn, setssn] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [state, setstate] = useState('');
+  const [zipcode, setzipcode] = useState('');
+  // const [, setssn] = useState('')
   const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -30,7 +34,9 @@ const Register: React.FC = () => {
           "lastName":lastName,
           "email":email,
           "phone":phone,
-          "password":password
+          "password":password,
+          "state":state,
+          "zipcode":zipcode
         });
       
        
@@ -129,6 +135,14 @@ const Register: React.FC = () => {
           required
         />
 
+        <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+
         <label htmlFor="role">Role:</label>
         <select
           id="role"
@@ -152,6 +166,32 @@ const Register: React.FC = () => {
           />
         </div>
       )}
+
+      {role === "user" && (
+        <div>
+          <label >State:</label>
+          <input
+            type="text"
+            id="ssn"
+            value={state}
+            onChange={(e) => setstate(e.target.value)}
+            placeholder="Enter organizer details"
+          />
+        </div>
+      )}
+      {role === "user" && (
+        <div>
+          <label >Zip Code:</label>
+          <input
+            type="text"
+            id="ssn"
+            value={zipcode}
+            onChange={(e) => setzipcode(e.target.value)}
+            placeholder="Enter organizer details"
+          />
+        </div>
+      )}
+
 
 
         {error && <p className="error-message">{error}</p>}

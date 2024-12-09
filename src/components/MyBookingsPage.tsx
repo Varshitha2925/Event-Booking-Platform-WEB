@@ -14,19 +14,19 @@ interface Booking {
   booking_status: string;
   createdAt: string;
 }
-interface Event {
-  _id: string;
-  id: string;
-  organizerId: string,
-  title: string,
-  location: string,
-  capacity: number,
-  date: string,
-  duration: number, // in hours
-  type: string,
-  price: number,
-  ticketSold: number
-}
+// interface Event {
+//   _id: string;
+//   id: string;
+//   organizerId: string,
+//   title: string,
+//   location: string,
+//   capacity: number,
+//   date: string,
+//   duration: number, // in hours
+//   type: string,
+//   price: number,
+//   ticketSold: number
+// }
 
 
 const MyBookingsPage: React.FC = () => {
@@ -96,7 +96,6 @@ const MyBookingsPage: React.FC = () => {
               <td>
               <button className="primary-button" onClick={() => cancelBookings(booking._id)}>Cancel Boooking</button>
               </td>
-
             </tr>
           ))}
         </tbody>

@@ -24,7 +24,7 @@ interface Event {
   enddate: string,
   startTime:string,
   endTime: string,
-  duration: number, // in hours
+  duration: string, // in hours
   type: string,
   price: number,
   ticketSold: number

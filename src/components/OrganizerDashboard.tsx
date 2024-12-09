@@ -23,7 +23,7 @@ interface Event {
   enddate: string,
   startTime: string,
   endTime:string,
-  duration: number, // in hours
+  duration: string, // in hours
   type: string,
   price: number,
   ticketSold: number
@@ -94,7 +94,22 @@ const OrganizerDashboard: React.FC = () => {
   };
 
   const handleCreateEvent = async (newEvent: Event) => {
-    
+    if (newEvent.startTime && newEvent.endTime) {
+      const startDate = new Date(`1970-01-01T${newEvent.startTime}:00`);
+      const endDate = new Date(`1970-01-01T${newEvent.endTime}:00`);
+
+      const diff = (endDate.getTime() - startDate.getTime()) / 1000 / 60; // Difference in minutes
+      if (diff >= 0) {
+        const hours = Math.floor(diff / 60);
+        const minutes = diff % 60;
+        newEvent.duration = `${hours} hour(s) and ${minutes} minute(s)`;
+      } else {
+        newEvent.duration = "End time must be after start time";
+      }
+    } else {
+      newEvent.duration = "";
+    }
+    console.log("Duration", newEvent.duration)
     if (eventToEdit) {
       // Creating a new event
       console.log("newEvent" , newEvent)

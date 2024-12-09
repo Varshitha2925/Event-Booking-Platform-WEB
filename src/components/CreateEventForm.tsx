@@ -20,7 +20,7 @@ import './CreateEventForm.css';
   enddate: string,
   startTime: string,
   endTime:string,
-  duration: number, // in hours
+  duration: string, // in hours
   type: string,
   price: number,
   ticketSold: number
@@ -46,7 +46,7 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
   const [startTime, setstartTime] = useState('');
   const [endTime, setendTime] = useState('');
   const [price, setPrice] = useState(0);
-  const [duration, setduration] = useState(0);
+  const [duration, setduration] = useState('');
   useEffect(() => {
 
     if (eventToEdit) {
@@ -56,12 +56,15 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
       setenddate(moment(eventToEdit.enddate).format("YYYY-MM-DD"))
       setduration(eventToEdit.duration);
       setCapacity(eventToEdit.capacity);
+      setstartTime(eventToEdit.startTime);
+      setendTime(eventToEdit.endTime)
       setEventType(eventToEdit.type);
       setPrice(eventToEdit.price);
     }
   }, [eventToEdit]);
 
   const handleSubmit = () => {
+    
     const newEvent: Event = {
       id: eventToEdit ? eventToEdit.id : Math.random().toString(36).substr(2, 9),
       title,
@@ -79,8 +82,31 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
     };
     console.log("date",newEvent.startdate)
     console.log("newEvent",newEvent)
+    
     onCreate(newEvent);
+
   };
+  // Function to calculate duration
+  // const calculateDuration = (start: string, end: string) => {
+  //   if (start && end) {
+  //     const startDate = new Date(`1970-01-01T${start}:00`);
+  //     const endDate = new Date(`1970-01-01T${end}:00`);
+
+  //     const diff = (endDate.getTime() - startDate.getTime()) / 1000 / 60; // Difference in minutes
+  //     if (diff >= 0) {
+  //       const hours = Math.floor(diff / 60);
+  //       const minutes = diff % 60;
+  //       setduration(`${hours} hour(s) and ${minutes} minute(s)`);
+  //     } else {
+  //       setduration("End time must be after start time");
+  //     }
+  //   } else {
+  //     setduration("");
+  //   }
+  // };
+
+  // Handlers for start and end times
+ 
 
   return (
     <div className="create-event-popup">
@@ -118,46 +144,39 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
             onChange={(e) => setenddate(e.target.value)}
           />
         </label>
-        <label>
-          Start Time:
+        {/* Start Time */}
+        <div>
+          <label htmlFor="startTime">Start Time:</label>
           <input
-            type="text"
+            type="time"
+            id="startTime"
             value={startTime}
             onChange={(e) => setstartTime(e.target.value)}
+
+            // onChange={handleStartTimeChange}
+            required
           />
-        </label>
-        <label>
-          End Time:
+        </div>
+
+        {/* End Time */}
+        <div>
+          <label htmlFor="endTime">End Time:</label>
           <input
-            type="text"
+            type="time"
+            id="endTime"
             value={endTime}
             onChange={(e) => setendTime(e.target.value)}
+            // onChange={handleEndTimeChange}
+            required  
           />
-        </label>
-        <label>
-          Duration(in hours):
-          <input
-            type="number"
-            value={duration}
-            onChange={(e) => setduration(Number(e.target.value))}
-          />
-        </label>
-        <label>
-          Price:
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
-        </label>
-        <label>
-          Capacity:
-          <input
-            type="number"
-            value={capacity}
-            onChange={(e) => setCapacity(Number(e.target.value))}
-          />
-        </label>
+        </div>
+
+        {/* Duration Display */}
+        {/* <div>
+          <label>Duration:</label>
+          <p>{duration || "Duration will be calculated automatically"}</p>
+        </div> */}
+
         <label>
           Event Type:
           <select
@@ -169,6 +188,35 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
             <option value="Free Unlimited">Free Unlimited</option>
           </select>
         </label>
+         {/* Capacity Field */}
+         {type === "Free Limited" || type === "Paid" ? (
+          <div>
+            <label htmlFor="capacity">Capacity:</label>
+            <input
+              type="number"
+              id="capacity"
+              onChange={(e) => setCapacity(Number(e.target.value))}
+              name="capacity"
+              value={capacity}
+              placeholder="Enter capacity"
+            />
+          </div>
+        ) : null}
+
+        {/* Prize Field */}
+        {type === "Paid" ? (
+          <div>
+            <label htmlFor="prize">Prize ($):</label>
+            <input
+              type="number"
+              id="prize"
+              onChange={(e) => setPrice(Number(e.target.value))}
+              value={price}
+              placeholder="Enter prize amount"
+            />
+          </div>
+        ) : null}
+        
         <div className="popup-buttons">
           <button onClick={handleSubmit}>{eventToEdit ? 'Edit' : 'Create'}</button>
           <button onClick={onClose}>Cancel</button>
