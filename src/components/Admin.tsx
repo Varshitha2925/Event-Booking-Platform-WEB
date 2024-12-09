@@ -93,7 +93,7 @@ const AdminPage: React.FC = () => {
   }
   const blockUser = async (user: any) => {
    
-    if(user.blocked === "true"){
+    if(user.verified === "true"){
       try{
       const response = await axios.patch(`http://localhost:3001/api/admin/users/${user._id}/unblock`);
       console.log("Organizer", response.data)
@@ -181,10 +181,10 @@ const AdminPage: React.FC = () => {
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td>{user.phone}</td>
-                    <td>{user.blocked === "true" ?"blocked":"unblocked" }</td>
+                    <td>{user.verified === "true" ?"Verified":"Not Verified" }</td>
                     <td>
                     {<div className="button-container">
-                    <button className="primary-button" onClick={() => blockUser(user)}>{user.blocked === "true" ? "Verify":"Deverify"} </button>
+                    <button className="primary-button" onClick={() => blockUser(user)}>{user.verified === "true" ? "De Verify":"Verify"} </button>
                     {/* <button className="secondary-button">Unblock Event</button> */}
                     </div>}
                     </td>
