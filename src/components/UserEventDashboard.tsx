@@ -115,29 +115,7 @@ const UserEventDashboard: React.FC = () => {
     <div className="user-dashboard">
       
       <h1>Events</h1>
-      <div className="filters">
-        <div className = "from">
-        <label>
-          From Date
-        <input
-          type="date"
-          name="startDate"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        /></label>
-        </div>
-        <div className = "end">
-        <label>
-          To Date
-        <input
-          type="date"
-          name="endDate"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        /></label>
-        </div>
-        <button onClick={handleFilter}>Filter Events</button>
-      </div>
+     
       <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
       <button
           className="mybookings"

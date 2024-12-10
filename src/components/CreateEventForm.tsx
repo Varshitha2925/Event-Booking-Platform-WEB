@@ -86,27 +86,38 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
     onCreate(newEvent);
 
   };
-  // Function to calculate duration
-  // const calculateDuration = (start: string, end: string) => {
-  //   if (start && end) {
-  //     const startDate = new Date(`1970-01-01T${start}:00`);
-  //     const endDate = new Date(`1970-01-01T${end}:00`);
 
-  //     const diff = (endDate.getTime() - startDate.getTime()) / 1000 / 60; // Difference in minutes
-  //     if (diff >= 0) {
-  //       const hours = Math.floor(diff / 60);
-  //       const minutes = diff % 60;
-  //       setduration(`${hours} hour(s) and ${minutes} minute(s)`);
-  //     } else {
-  //       setduration("End time must be after start time");
-  //     }
-  //   } else {
-  //     setduration("");
-  //   }
-  // };
+  // Function to calculate duration
+  const calculateDuration = (start: string, end: string) => {
+    if (start && end) {
+      const startDate = new Date(`1970-01-01T${start}:00`);
+      const endDate = new Date(`1970-01-01T${end}:00`);
+
+      const diff = (endDate.getTime() - startDate.getTime()) / 1000 / 60; // Difference in minutes
+      if (diff >= 0) {
+        const hours = Math.floor(diff / 60);
+        const minutes = diff % 60;
+        setduration(`${hours} hour(s) and ${minutes} minute(s)`);
+      } else {
+        setduration("End time must be after start time");
+      }
+    } else {
+      setduration("");
+    }
+  };
 
   // Handlers for start and end times
- 
+  const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setstartTime(value);
+    calculateDuration(value, endTime);
+  };
+
+  const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setendTime(value);
+    calculateDuration(startTime, value);
+  };
 
   return (
     <div className="create-event-popup">
@@ -151,9 +162,9 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
             type="time"
             id="startTime"
             value={startTime}
-            onChange={(e) => setstartTime(e.target.value)}
+            // onChange={(e) => setstartTime(e.target.value)}
 
-            // onChange={handleStartTimeChange}
+            onChange={handleStartTimeChange}
             required
           />
         </div>
@@ -165,17 +176,17 @@ const CreateEventPopup: React.FC<CreateEventPopupProps> = ({
             type="time"
             id="endTime"
             value={endTime}
-            onChange={(e) => setendTime(e.target.value)}
-            // onChange={handleEndTimeChange}
+            // onChange={(e) => setendTime(e.target.value)}
+            onChange={handleEndTimeChange}
             required  
           />
         </div>
 
         {/* Duration Display */}
-        {/* <div>
+        <div>
           <label>Duration:</label>
           <p>{duration || "Duration will be calculated automatically"}</p>
-        </div> */}
+        </div>
 
         <label>
           Event Type:

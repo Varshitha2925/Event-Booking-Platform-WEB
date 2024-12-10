@@ -69,7 +69,9 @@ const Register: React.FC = () => {
           "email":email,
           "phone":phone,
           "password":password,
-          "ssn":ssn
+          "ssn":ssn,
+          "state":state,
+          "zipcode":zipcode
         });
         console.log("response", response)
         if (response.data) {
@@ -162,35 +164,33 @@ const Register: React.FC = () => {
             id="ssn"
             value={ssn}
             onChange={(e) => setssn(e.target.value)}
-            placeholder="Enter organizer details"
+            placeholder="Enter Social Security Number"
           />
         </div>
       )}
 
-      {role === "user" && (
-        <div>
-          <label >State:</label>
-          <input
-            type="text"
-            id="ssn"
-            value={state}
-            onChange={(e) => setstate(e.target.value)}
-            placeholder="Enter organizer details"
-          />
-        </div>
-      )}
-      {role === "user" && (
-        <div>
-          <label >Zip Code:</label>
-          <input
-            type="text"
-            id="ssn"
-            value={zipcode}
-            onChange={(e) => setzipcode(e.target.value)}
-            placeholder="Enter organizer details"
-          />
-        </div>
-      )}
+      <div>
+        <label >State:</label>
+        <input
+          type="text"
+          id="ssn"
+          value={state}
+          onChange={(e) => setstate(e.target.value)}
+          placeholder="Enter State"
+        />
+      </div>
+
+      <div>
+        <label >Zip Code:</label>
+        <input
+          type="text"
+          id="ssn"
+          value={zipcode}
+          onChange={(e) => setzipcode(e.target.value)}
+          placeholder="Enter Zip Code"
+        />
+      </div>
+      
 
 
 
@@ -201,7 +201,7 @@ const Register: React.FC = () => {
 
       <p className="login-link">
         Already have an account?{' '}
-        <a href="/login" onClick={() => navigate('/login')}>
+        <a href="/login" onClick={() => navigate('/')}>
           Login here
         </a>
       </p>

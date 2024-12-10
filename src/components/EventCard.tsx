@@ -34,6 +34,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <p>StartDate: {moment(event.startdate).format("MM/DD/YYYY")}</p>
       <p>EndDate:  {moment(event.enddate).format("MM/DD/YYYY")}</p>
       <p>Time: {event.startTime} - {event.endTime}</p>
+      <p>Duration: {event.duration}</p>
       <button onClick={() => setShowPopup(true)}>Book Now</button>
       {showPopup && <BookEventPopup event={event} onClose={() => setShowPopup(false)} />}
     </div>
