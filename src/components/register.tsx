@@ -201,7 +201,7 @@ const Register: React.FC = () => {
 
       <p className="login-link">
         Already have an account?{' '}
-        <a href="/login" onClick={() => navigate('/')}>
+        <a href="/" onClick={() => navigate('/')}>
           Login here
         </a>
       </p>
