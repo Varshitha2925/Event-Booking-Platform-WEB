@@ -143,7 +143,7 @@ const Register: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-          />
+        />
 
         <label htmlFor="role">Role:</label>
         <select

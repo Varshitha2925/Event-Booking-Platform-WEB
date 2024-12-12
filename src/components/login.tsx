@@ -13,7 +13,7 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if(role === "user"){
+    if(role === "user" ){
     try {
       const response = await axios.post('http://localhost:3001/api/users/login', {
         email,
@@ -26,7 +26,13 @@ const Login: React.FC = () => {
         console.log('Login successful');
         localStorage.setItem('userId', response.data.user._id); // Save token to local storage
         console.log('userId', response.data.user._id)
+        if(response.data.user.verified == true){
         navigate('/dashboard'); // Redirect to user/organizer dashboard
+        }
+        else{
+          navigate('/')
+        }
+
       } else {
         setError(response.data.message || 'Login failed');
       }
