@@ -1,24 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Admin.css'; // Add CSS styles for the admin page
+import './Admin.css';
 
-// Admin Page Component
 const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('users');
   const [users, setUsers] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
-  const [organizers, setOrganizers] = useState<any[]>([])
+  const [organizers, setOrganizers] = useState<any[]>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 5;
 
   const navigate = useNavigate();
 
   const logOut = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
 
-  // Fetch data based on active tab
   useEffect(() => {
     if (activeTab === 'users') fetchUsers();
     if (activeTab === 'events') fetchEvents();
@@ -31,7 +32,6 @@ const AdminPage: React.FC = () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/users');
       setUsers(response.data.data);
-      console.log("users",response.data.data )
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -46,25 +46,18 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const deleteEvents = async (eventID:any) => {
-
+  const deleteEvents = async (eventID: any) => {
     try {
-      console.log("EVENTID" , eventID)
-      const response = await axios.delete(`http://localhost:3001/api/admin/events/${eventID}`);
-      setEvents(response.data);
+      await axios.delete(`http://localhost:3001/api/admin/events/${eventID}`);
+      fetchEvents();
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error('Error deleting event:', error);
     }
-
-    navigate(0);
-    setActiveTab('events')
-
-  }
+  };
 
   const fetchBookings = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/bookings');
-      console.log("bookings", response.data)
       setBookings(response.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);
@@ -74,7 +67,6 @@ const AdminPage: React.FC = () => {
   const fetchPayments = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/payment');
-      console.log("payments",response.data);
       setPayments(response.data);
     } catch (error) {
       console.error('Error fetching payments:', error);
@@ -84,240 +76,167 @@ const AdminPage: React.FC = () => {
   const fetchOrganizers = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/organizer');
-      console.log("organizers",response.data);
       setOrganizers(response.data);
-      console.log("Organizer", response.data)
     } catch (error) {
-      console.error('Error fetching payments:', error);
+      console.error('Error fetching organizers:', error);
     }
-  }
+  };
+
   const blockUser = async (user: any) => {
-   
-    if(user.verified === "true"){
-      try{
-      const response = await axios.patch(`http://localhost:3001/api/admin/users/${user._id}/unblock`);
-      console.log("Organizer", response.data)
-      navigate(0)
-
-    }catch (error){
-
-    }}
-    else{
-      // console.log("Hey Block")
-      try{
-        const response = await axios.patch(`http://localhost:3001/api/admin/users/${user._id}`);
-
-        console.log("Organizer", response.data)
-        navigate(0)
-  
-      }catch (error){
-  
+    try {
+      if (user.verified === "true") {
+        await axios.patch(`http://localhost:3001/api/admin/users/${user._id}/unblock`);
+      } else {
+        await axios.patch(`http://localhost:3001/api/admin/users/${user._id}`);
       }
-
+      fetchUsers();
+    } catch (error) {
+      console.error('Error blocking/unblocking user:', error);
     }
-    
-  }
+  };
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+
+  const currentData =
+    activeTab === 'users'
+      ? users.slice(indexOfFirstRecord, indexOfLastRecord)
+      : activeTab === 'events'
+      ? events.slice(indexOfFirstRecord, indexOfLastRecord)
+      : activeTab === 'bookings'
+      ? bookings.slice(indexOfFirstRecord, indexOfLastRecord)
+      : activeTab === 'payments'
+      ? payments.slice(indexOfFirstRecord, indexOfLastRecord)
+      : organizers.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const totalPages = Math.ceil(
+    (activeTab === 'users'
+      ? users.length
+      : activeTab === 'events'
+      ? events.length
+      : activeTab === 'bookings'
+      ? bookings.length
+      : activeTab === 'payments'
+      ? payments.length
+      : organizers.length) / recordsPerPage
+  );
 
   return (
-    
     <div className="admin-page">
-      <h1>Admin Dashboard</h1>
-      <button onClick={logOut} className="logout-btn">Log Out</button>
+      
+      {/* Tabs */}
       <div className="tabs">
-        <button
-          className={activeTab === 'users' ? 'active' : ''}
-          onClick={() => setActiveTab('users')}
-        >
-          Users
-        </button>
-        <button
-          className={activeTab === 'events' ? 'active' : ''}
-          onClick={() => setActiveTab('events')}
-        >
-          Events
-        </button>
-        <button
-          className={activeTab === 'bookings' ? 'active' : ''}
-          onClick={() => setActiveTab('bookings')}
-        >
-          Bookings
-        </button>
-        <button
-          className={activeTab === 'payments' ? 'active' : ''}
-          onClick={() => setActiveTab('payments')}
-        >
-          Payments
-        </button>
-
-        <button
-          className={activeTab === 'organizer' ? 'active' : ''}
-          onClick={() => setActiveTab('organizer')}
-        >
-          Organizers
-        </button>
+        <h1>Admin Dashboard</h1>
+        <div className="tabslot">
+          <button className={activeTab === 'users' ? 'active' : ''} onClick={() => { setActiveTab('users'); setCurrentPage(1); }}>Users</button>
+          <button className={activeTab === 'events' ? 'active' : ''} onClick={() => { setActiveTab('events'); setCurrentPage(1); }}>Events</button>
+          <button className={activeTab === 'bookings' ? 'active' : ''} onClick={() => { setActiveTab('bookings'); setCurrentPage(1); }}>Bookings</button>
+          <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => { setActiveTab('payments'); setCurrentPage(1); }}>Payments</button>
+          <button className={activeTab === 'organizer' ? 'active' : ''} onClick={() => { setActiveTab('organizer'); setCurrentPage(1); }}>Organizers</button>
+          <button onClick={logOut} className="logout-btn">Log Out</button>
+        </div>
       </div>
 
+      {/* Main Content */}
       <div className="content">
-        {activeTab === 'users' && (
-          <div className="users-section">
-            <h2>Users</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Statues</th>
-                  <th>Actions</th>
+        <div className="data-table">
+
+          {/* Active Tab Name */}
+          <h2>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
+
+          {/* Table */}
+          <table>
+            <thead>
+              <tr>
+                {activeTab === 'users' && (<><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></>)}
+                {activeTab === 'events' && (<><th>ID</th><th>Title</th><th>Location</th><th>Date</th><th>Capacity</th><th>Type</th><th>Actions</th></>)}
+                {activeTab === 'bookings' && (<><th>ID</th><th>Event Name</th><th>User ID</th><th>No. of Seats</th><th>Prize</th></>)}
+                {activeTab === 'payments' && (<><th>ID</th><th>Booking ID</th><th>Card Number</th><th>Date</th></>)}
+                {activeTab === 'organizer' && (<><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Role</th></>)}
+              </tr>
+            </thead>
+            <tbody>
+              {currentData.map((item: any) => (
+                <tr key={item._id}>
+                  {activeTab === 'users' && (
+                    <>
+                      <td>{item._id}</td>
+                      <td>{item.firstName}</td>
+                      <td>{item.lastName}</td>
+                      <td>{item.email}</td>
+                      <td>{item.phone}</td>
+                      <td>{item.verified === "true" ? "Verified" : "Not Verified"}</td>
+                      <td><button onClick={() => blockUser(item)} className="primary-button">{item.verified === "true" ? "De Verify" : "Verify"}</button></td>
+                    </>
+                  )}
+                  {activeTab === 'events' && (
+                    <>
+                      <td>{item._id}</td>
+                      <td>{item.title}</td>
+                      <td>{item.location}</td>
+                      <td>{new Date(item.date).toLocaleDateString()}</td>
+                      <td>{item.capacity}</td>
+                      <td>{item.type}</td>
+                      <td><button onClick={() => deleteEvents(item._id)} className="primary-button">Remove Event</button></td>
+                    </>
+                  )}
+                  {activeTab === 'bookings' && (
+                    <>
+                      <td>{item._id}</td>
+                      <td>{item.title}</td>
+                      <td>{item.userId}</td>
+                      <td>{item.no_of_tickets}</td>
+                      <td>{item.totalPrize}</td>
+                    </>
+                  )}
+                  {activeTab === 'payments' && (
+                    <>
+                      <td>{item._id}</td>
+                      <td>{item.bookingId}</td>
+                      <td>{item.cardNumber}</td>
+                      <td>{new Date(item.date).toLocaleDateString()}</td>
+                    </>
+                  )}
+                  {activeTab === 'organizer' && (
+                    <>
+                      <td>{item._id}</td>
+                      <td>{item.firstName}</td>
+                      <td>{item.lastName}</td>
+                      <td>{item.email}</td>
+                      <td>{item.phone}</td>
+                      <td>Organizer</td>
+                    </>
+                  )}
                 </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user._id}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.verified === "true" ?"Verified":"Not Verified" }</td>
-                    <td>
-                    {<div className="button-container">
-                    <button className="primary-button" onClick={() => blockUser(user)}>{user.verified === "true" ? "De Verify":"Verify"} </button>
-                    {/* <button className="secondary-button">Unblock Event</button> */}
-                    </div>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Pagination Controls */}
+          <div className="pagination-controls">
+            <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                className={currentPage === index + 1 ? 'active' : ''}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
           </div>
-        )}
-        {activeTab === 'events' && (
-          <div className="events-section">
-            <h2>Events</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Capacity</th>
-                  <th>Type</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {events.map((event) => (
-                  <tr key={event._id}>
-                    <td>{event._id}</td>
-                    <td>{event.title}</td>
-                    <td>{event.location}</td>
-                    <td>{new Date(event.date).toLocaleDateString()}</td>
-                    <td>{event.capacity}</td>
-                    <td>{event.type}</td>
-                    <td>
-                    {<div className="button-container">
-                    <button className="primary-button" onClick={() => deleteEvents(event.id)}>Remove Event</button>
-                    </div>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        {activeTab === 'bookings' && (
-          <div className="bookings-section">
-            <h2>Bookings</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Event Name</th>
-                  <th>User ID</th>
-                  <th>No. of Seats</th>
-                  <th>Prize</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.map((booking) => (
-                  <tr key={booking._id}>
-                    <td>{booking._id}</td>
-                    <td>{booking.title}</td>
-                    <td>{booking.userId}</td>
-                    <td>{booking.no_of_tickets}</td>
-                    <td>{booking.totalPrize}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        {activeTab === 'payments' && (
-          <div className="payments-section">
-            <h2>Payments</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>BookingID</th>
-                  <th>Card Number</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {payments.map((payment) => (
-                  <tr key={payment._id}>
-                    <td>{payment._id}</td>
-                    <td>{payment.bookingId}</td>
-                    <td>{payment.cardNumber}</td>
-                    <td>{new Date(payment.date).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        {activeTab === 'organizer' && (
-          <div className="users-section">
-            <h2>Organizer</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Role</th>
-                  {/* <th>Actions</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {organizers.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user._id}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>Organizer</td>
-                    {/* <td>
-                    {<div className="button-container">
-                    <button className="primary-button">Block User</button>
-                    <button className="secondary-button">Unblock Event</button>
-                    </div>}
-                    </td> */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+
+        </div>
       </div>
+      {/* Total Count with Circle */}
+      <div className="total-count-container">
+            {activeTab === 'users' && <>Total Users: <span className="count-badge">{users.length}</span></>}
+            {activeTab === 'events' && <>Total Events: <span className="count-badge">{events.length}</span></>}
+            {activeTab === 'bookings' && <>Total Bookings: <span className="count-badge">{bookings.length}</span></>}
+            {activeTab === 'payments' && <>Total Payments: <span className="count-badge">{payments.length}</span></>}
+            {activeTab === 'organizer' && <>Total Organizers: <span className="count-badge">{organizers.length}</span></>}
+          </div>
     </div>
   );
 };

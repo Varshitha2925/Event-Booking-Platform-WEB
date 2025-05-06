@@ -115,6 +115,7 @@ const UserEventDashboard: React.FC = () => {
     <div className="user-dashboard">
       
       <h1>Events</h1>
+      <div className="actionButtons">
      
       <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
       <button
@@ -126,6 +127,7 @@ const UserEventDashboard: React.FC = () => {
           My Profile
         </button>
       <button onClick={logOut} className="logout-btn">Log Out</button>
+      </div>
       <div className="event-list">
         {events.map((event) => (
           <EventCard key={event._id} event={event} />

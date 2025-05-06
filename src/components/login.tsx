@@ -26,7 +26,7 @@ const Login: React.FC = () => {
         console.log('Login successful');
         localStorage.setItem('userId', response.data.user._id); // Save token to local storage
         console.log('userId', response.data.user._id)
-        if(response.data.user.verified == true){
+        if(response.data.user.verified === "true"){
         navigate('/dashboard'); // Redirect to user/organizer dashboard
         }
         else{

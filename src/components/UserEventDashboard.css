@@ -1,28 +1,21 @@
-.logout-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    /* float: right;
-    flex : right; */
-    /* margin-left: 100%; */
-}
-.my-bookings-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 
-    
-    /* margin-left: 100%; */
-  }
 
 .user-dashboard{
+    width: 100vw;
+    height: 100vh;
+ 
     padding:10px;
+    .actionButtons{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        margin-left: 120vh;
+        justify-content: space-between;
+        width:40vh;
+        button{
+            width: fit-content;
+        }
+    }
 }
 
 .event-list{
@@ -69,8 +62,6 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    /* float: right;
-    flex : right; */
-    /* margin-left: 100%; */
+   
 
 }
