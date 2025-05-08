@@ -40,7 +40,7 @@ header nav a:hover {
 
 /* Button Styling */
 button {
-  background: linear-gradient(135deg, #67b26f, #4ca2cd); /* Green-blue gradient */
+  background: linear-gradient(135deg, #db11a8, #4ca2cd); /* Green-blue gradient */
   border: none;
   padding: 10px 15px;
   color: white;
@@ -53,7 +53,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  background: linear-gradient(135deg, #5aa562, #3f91b3); /* Slightly darker gradient */
+  background: linear-gradient(135deg, #db11a8, #4ca2cd); /* Slightly darker gradient */
 }
 
 /* Container Styling */
@@ -86,6 +86,7 @@ button:hover {
 
 .card-content {
   padding: 15px;
+  
 }
 
 .card-content h3 {

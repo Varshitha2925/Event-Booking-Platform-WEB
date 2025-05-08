@@ -1,11 +1,11 @@
 .event-card {
   border: 1px solid #ddd;
+  /* background-color: rgb(148, 186, 244) ; */
+  background-color: white;
   border-radius: 8px;
   padding: 15px;
-  background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  /* border: 2px solid red; */
 }
 
 .event-card h3 {
@@ -28,7 +28,7 @@
 }
 
 .card-buttons button:first-child {
-  background-color: #007bff;
+  /* background-color: #007bff; */
   color: white;
 }
 

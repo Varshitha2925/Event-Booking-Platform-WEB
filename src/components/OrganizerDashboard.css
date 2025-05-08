@@ -1,14 +1,44 @@
 .organizer-dashboard {
-  padding: 20px;
+
   background-color: #f8f9fa;
   min-height: 100vh;
+  background-image: url(img.jpg);
+  background-repeat: no-repeat;
+ 
+  border: 1px solid red;
+
 }
 
 .dashboard-header {
   display: flex;
+  padding: 20px;
   justify-content: space-between;
   align-items: center;
+  background-color: #434343;
   margin-bottom: 20px;
+  h1{
+    color: white;
+  }
+  .dashboard-buttons {
+    display: flex;
+    color: white;
+    width:30vw;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    button {
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: fit-content
+    }
+    
+  }
 }
 
 .create-event-button {
@@ -27,13 +57,8 @@
 }
 
 .logout-btn {
-  background-color: #007bff;
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  float: right;
-  flex : right;
-  /* margin-left: 100%; */
 }

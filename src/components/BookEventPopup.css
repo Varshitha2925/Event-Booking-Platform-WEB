@@ -14,7 +14,7 @@
   
   /* Popup box styling */
   .popup-box {
-    background: linear-gradient(135deg, #ffecd2, #fcb69f); /* Warm gradient */
+    background: linear-gradient(135deg, #5d77ea, #77b1ef); /* Warm gradient */
     padding: 30px;
     border-radius: 16px;
     width: 360px;
@@ -32,7 +32,7 @@
     font-weight: 700;
     text-transform: capitalize;
     letter-spacing: 1px;
-    border-bottom: 2px solid #ff6f61; /* Accent color */
+    border-bottom: 2px solid #f5fbfa; /* Accent color */
     padding-bottom: 10px;
   }
   
@@ -82,7 +82,7 @@
   }
   
   .popup-actions button:first-child {
-    background: linear-gradient(135deg, #67b26f, #4ca2cd); /* Green-blue gradient */
+    background: linear-gradient(135deg, #db11a8, #4ca2cd); /* Green-blue gradient */
     color: white;
   }
   

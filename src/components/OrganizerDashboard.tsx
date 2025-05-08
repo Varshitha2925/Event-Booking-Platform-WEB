@@ -192,8 +192,10 @@ const OrganizerDashboard: React.FC = () => {
 
   return (
     <div className="organizer-dashboard">
+      
       <div className="dashboard-header">
         <h1> My Events </h1>
+        <div className="dashboard-buttons">
         <button
           className="create-event-button"
           onClick={() => {
@@ -215,6 +217,7 @@ const OrganizerDashboard: React.FC = () => {
         
         
         <button onClick={logOut} className="logout-btn">Log Out</button>
+        </div>
 
       </div>
 

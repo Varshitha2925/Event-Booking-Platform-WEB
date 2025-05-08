@@ -114,8 +114,13 @@ const UserEventDashboard: React.FC = () => {
   return (
     <div className="user-dashboard">
       
-      <h1>Events</h1>
+      <div className="header">
+        <div className="logo">
+          <h1>Book Your Event</h1>
+        </div>
+      
       <div className="actionButtons">
+        
      
       <button onClick={handleMyBookings} className="my-bookings-btn">My Bookings</button>
       <button
@@ -126,7 +131,8 @@ const UserEventDashboard: React.FC = () => {
         >
           My Profile
         </button>
-      <button onClick={logOut} className="logout-btn">Log Out</button>
+      <button onClick={logOut} >Log Out</button>
+      </div>
       </div>
       <div className="event-list">
         {events.map((event) => (

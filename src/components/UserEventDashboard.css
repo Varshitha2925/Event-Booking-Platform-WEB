@@ -3,19 +3,36 @@
 .user-dashboard{
     width: 100vw;
     height: 100vh;
- 
-    padding:10px;
+    justify-content: center;
     .actionButtons{
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
-        margin-left: 120vh;
+        margin-left: 100vh;
         justify-content: space-between;
         width:40vh;
         button{
             width: fit-content;
         }
     }
+    background-image: url("img.jpg");
+    /* border: 2px solid red;     */
+   
+
+}
+.logo{
+        
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    h1{
+        color: white;
+        font-size: 30px;
+        font-weight: 600;
+        margin-left: 20px;
+    }
+
 }
 
 .event-list{
@@ -64,4 +81,13 @@
     cursor: pointer;
    
 
+}
+
+.header{
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(86, 129, 181);
+    
 }

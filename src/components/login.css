@@ -3,11 +3,18 @@ body {
     margin: 0;
     padding: 0;
     background: #f9f9f9;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(logo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
   }
   
   .login-page {
     max-width: 400px;
-    margin: 50px auto;
+    margin: 150px auto;
     padding: 20px;
     background: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
