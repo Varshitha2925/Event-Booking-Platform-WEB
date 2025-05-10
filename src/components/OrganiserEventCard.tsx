@@ -76,7 +76,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
       <p>Register: {event.register}</p>
       <div className="card-buttons">
         <button onClick={() => onEdit(event)}>Edit</button>
-        <button onClick={() => onDelete(event.id)}>Delete</button>
+        {/* <button onClick={() => onDelete(event.id)}>Delete</button> */}
         <button onClick={() => getBookings(event.id)}>Bookings</button>
       </div>
 
