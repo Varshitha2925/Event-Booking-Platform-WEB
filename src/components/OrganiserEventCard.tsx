@@ -27,7 +27,8 @@ interface Event {
   duration: string, // in hours
   type: string,
   price: number,
-  ticketSold: number
+  ticketSold: number,
+  register: string
 }
 
 interface OrganizerEventCardProps {
@@ -72,6 +73,7 @@ const OrganizerEventCard: React.FC<OrganizerEventCardProps> = ({
       <p>Tickets Sold: {event.ticketSold}</p>
       <p>Type: {event.type}</p>
       <p>Price: {event.price}</p>
+      <p>Register: {event.register}</p>
       <div className="card-buttons">
         <button onClick={() => onEdit(event)}>Edit</button>
         <button onClick={() => onDelete(event.id)}>Delete</button>

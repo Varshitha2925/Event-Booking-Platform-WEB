@@ -85,9 +85,14 @@ const AdminPage: React.FC = () => {
   const blockUser = async (user: any) => {
     try {
       if (user.verified === "true") {
+        console.log("blocking user");
+        console.log(user._id);
         await axios.patch(`http://localhost:3001/api/admin/users/${user._id}/unblock`);
+        navigate('/admin-dashboard');
       } else {
         await axios.patch(`http://localhost:3001/api/admin/users/${user._id}`);
+        navigate('/admin-dashboard');
+        
       }
       fetchUsers();
     } catch (error) {
@@ -148,11 +153,11 @@ const AdminPage: React.FC = () => {
           <table>
             <thead>
               <tr>
-                {activeTab === 'users' && (<><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></>)}
+                {activeTab === 'users' && (<><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th></>)}
                 {activeTab === 'events' && (<><th>ID</th><th>Title</th><th>Location</th><th>Date</th><th>Capacity</th><th>Type</th><th>Actions</th></>)}
                 {activeTab === 'bookings' && (<><th>ID</th><th>Event Name</th><th>User ID</th><th>No. of Seats</th><th>Prize</th></>)}
                 {activeTab === 'payments' && (<><th>ID</th><th>Booking ID</th><th>Card Number</th><th>Date</th></>)}
-                {activeTab === 'organizer' && (<><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Role</th></>)}
+                {activeTab === 'organizer' && (<><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></>)}
               </tr>
             </thead>
             <tbody>
@@ -165,8 +170,6 @@ const AdminPage: React.FC = () => {
                       <td>{item.lastName}</td>
                       <td>{item.email}</td>
                       <td>{item.phone}</td>
-                      <td>{item.verified === "true" ? "Verified" : "Not Verified"}</td>
-                      <td><button onClick={() => blockUser(item)} className="primary-button">{item.verified === "true" ? "De Verify" : "Verify"}</button></td>
                     </>
                   )}
                   {activeTab === 'events' && (
@@ -177,7 +180,7 @@ const AdminPage: React.FC = () => {
                       <td>{new Date(item.date).toLocaleDateString()}</td>
                       <td>{item.capacity}</td>
                       <td>{item.type}</td>
-                      <td><button onClick={() => deleteEvents(item._id)} className="primary-button">Remove Event</button></td>
+                      {/* <td><button onClick={() => deleteEvents(item._id)} className="primary-button">Remove Event</button></td> */}
                     </>
                   )}
                   {activeTab === 'bookings' && (
@@ -204,7 +207,9 @@ const AdminPage: React.FC = () => {
                       <td>{item.lastName}</td>
                       <td>{item.email}</td>
                       <td>{item.phone}</td>
-                      <td>Organizer</td>
+                      <td>{item.verified === "true" ? "Verified" : "Not Verified"}</td>
+                      <td><button onClick={() => blockUser(item)} className="primary-button">{item.verified === "true" ? "De Verify" : "Verify"}</button></td>
+                      
                     </>
                   )}
                 </tr>

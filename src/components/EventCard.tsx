@@ -17,7 +17,8 @@ interface EventCardProps {
   duration: number, // in hours
   type: string,
   price: number,
-  ticketSold: number
+  ticketSold: number,
+  register: string,
   };
 }
 
@@ -35,7 +36,10 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <p>EndDate:  {moment(event.enddate).format("MM/DD/YYYY")}</p>
       <p>Time: {event.startTime} - {event.endTime}</p>
       <p>Duration: {event.duration}</p>
-      <button onClick={() => setShowPopup(true)}>Book Now</button>
+      {event.register !== 'yes' && (
+  <button onClick={() => setShowPopup(true)}>Book Now</button>
+)}
+
       {showPopup && <BookEventPopup event={event} onClose={() => setShowPopup(false)} />}
     </div>
   );

@@ -26,7 +26,8 @@ interface Event {
   duration: string, // in hours
   type: string,
   price: number,
-  ticketSold: number
+  ticketSold: number,
+  register: string
 }
 
 interface Organizer {
@@ -66,6 +67,7 @@ const OrganizerDashboard: React.FC = () => {
     try {
       console.log("userID", userId)
       const response = await axios.get(`http://localhost:3001/api/events/getevents/${userId}`);
+      console.log("response Events",response.data)
       
       setevent(response.data);
       console.log("events",response.data)
